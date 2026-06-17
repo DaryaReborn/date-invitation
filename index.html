@@ -1,15 +1,685 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
   <title>Свидание ❤️</title>
-  <script>
-    window.location.replace("./Love.html" + window.location.search + window.location.hash);
-  </script>
+  <style>
+    :root {
+      --bg-1: #fff7f7;
+      --bg-2: #f8ecec;
+      --card: rgba(255, 255, 255, 0.78);
+      --text: #3d2a2a;
+      --muted: #8a6b6b;
+      --accent: #c86f7b;
+      --accent-dark: #9d4f5b;
+      --line: rgba(137, 91, 91, 0.16);
+      --shadow: 0 26px 70px rgba(94, 48, 57, 0.15);
+      --radius: 30px;
+      --font: ui-rounded, "SF Pro Rounded", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 203, 211, 0.55), transparent 30%),
+        radial-gradient(circle at 82% 12%, rgba(255, 235, 198, 0.55), transparent 32%),
+        radial-gradient(circle at 50% 92%, rgba(226, 196, 255, 0.38), transparent 32%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 440px;
+      height: 440px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.34);
+      filter: blur(18px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before { top: -180px; left: -140px; }
+    body::after { bottom: -220px; right: -140px; }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 16px;
+    }
+
+    .card {
+      width: min(94vw, 560px);
+      min-height: 390px;
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      padding: clamp(24px, 5vw, 42px);
+      position: relative;
+      overflow: hidden;
+      animation: cardIn 520ms cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.54), transparent 48%, rgba(255, 199, 207, .18));
+      pointer-events: none;
+    }
+
+    .inner { position: relative; z-index: 1; }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 16px;
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin: 0;
+      text-align: center;
+      line-height: 1.1;
+      letter-spacing: -0.045em;
+    }
+
+    h1 { font-size: clamp(34px, 8vw, 54px); }
+    h2 { font-size: clamp(29px, 7vw, 46px); }
+
+    .subtitle {
+      color: var(--muted);
+      text-align: center;
+      margin: 18px auto 0;
+      line-height: 1.55;
+      max-width: 390px;
+      font-size: 16px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 34px;
+      flex-wrap: wrap;
+    }
+
+    button, .button-like {
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 24px;
+      min-height: 52px;
+      font-family: inherit;
+      font-weight: 800;
+      letter-spacing: .03em;
+      cursor: pointer;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border 180ms ease;
+      user-select: none;
+    }
+
+    button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(200, 111, 123, 0.35);
+      outline-offset: 3px;
+    }
+
+    .primary {
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #e2a0a8);
+      box-shadow: 0 16px 30px rgba(200, 111, 123, 0.28);
+    }
+
+    .primary:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(200, 111, 123, 0.34); }
+    .primary:active { transform: translateY(1px); }
+
+    .ghost {
+      color: var(--accent-dark);
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--line);
+    }
+
+    .ghost:hover { transform: translateY(-2px); }
+
+    .no-btn {
+      position: relative;
+      color: #7f5b5b;
+      background: rgba(255,255,255,.50);
+      border: 1px dashed rgba(149, 98, 98, .28);
+      cursor: not-allowed;
+    }
+
+    .no-btn:hover {
+      color: #2c2020;
+      background: #fff;
+      transform: rotate(-2deg) scale(1.03);
+    }
+
+    .cat-panel {
+      height: 0;
+      overflow: hidden;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(-4px);
+      transition: 200ms ease;
+      color: #4e3434;
+      margin-top: 10px;
+      font-weight: 800;
+      white-space: pre-line;
+    }
+
+    .cat-panel.show {
+      height: 96px;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hidden { display: none !important; }
+
+    .joy-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 290px;
+      text-align: center;
+    }
+
+    .big-heart {
+      font-size: clamp(76px, 20vw, 132px);
+      animation: heartbeat 900ms ease-in-out infinite;
+      filter: drop-shadow(0 18px 35px rgba(200, 111, 123, 0.28));
+    }
+
+    .joy-text {
+      font-size: clamp(25px, 7vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      margin-top: 18px;
+    }
+
+    .sparkle {
+      position: fixed;
+      top: -24px;
+      font-size: 22px;
+      pointer-events: none;
+      animation: fall linear forwards;
+      z-index: 10;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    label {
+      display: grid;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      font-weight: 800;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.66);
+      color: var(--text);
+      border-radius: 18px;
+      padding: 15px 16px;
+      font: inherit;
+      font-weight: 650;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator { opacity: .65; cursor: pointer; }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+      margin-top: 28px;
+    }
+
+    @media (min-width: 540px) {
+      .activity-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .activity {
+      border-radius: 20px;
+      min-height: 54px;
+      padding: 13px 15px;
+      background: rgba(255,255,255,.58);
+      color: var(--text);
+      border: 1px solid var(--line);
+      text-align: left;
+      box-shadow: none;
+    }
+
+    .activity:hover { transform: translateY(-1px); background: rgba(255,255,255,.78); }
+    .activity.selected {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent), #e5a0a8);
+      box-shadow: 0 12px 28px rgba(200, 111, 123, .22);
+    }
+
+    .custom-box {
+      margin-top: 14px;
+      animation: softIn 220ms ease both;
+    }
+
+    .counter {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 7px;
+    }
+
+    .summary {
+      margin-top: 28px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.54);
+      border-radius: 24px;
+      padding: 18px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .summary strong { color: var(--accent-dark); }
+
+    .note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .access-card {
+      text-align: center;
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.55);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .footer-heart {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(18px) scale(.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes softIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      20% { transform: scale(1.16) rotate(-4deg); }
+      42% { transform: scale(.96) rotate(2deg); }
+      65% { transform: scale(1.12) rotate(0); }
+    }
+
+    @keyframes fall {
+      to { transform: translateY(106vh) rotate(420deg); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
-  <p>Открываю приглашение...</p>
+  <main class="app">
+    <section class="card" id="card">
+      <div class="inner" id="accessDenied" hidden>
+        <div class="access-card">
+          <div>
+            <div class="pill">🔒 только по секретной ссылке</div>
+            <h2>УПС, ЭТО НЕ ТА ДВЕРЬ</h2>
+            <p class="subtitle">Эта страница открывается только по личной ссылке-приглашению.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="inner" id="husbandFlow">
+        <section id="stepInvite">
+          <p class="kicker">мини‑приглашение</p>
+          <h1>ТЫ ПОЙДЕШЬ СО МНОЙ НА СВИДАНИЕ?</h1>
+          <p class="subtitle">Ответственный выбор. От него зависит уровень романтики, вкусной еды и довольной жены.</p>
+          <div class="buttons">
+            <button class="primary" id="yesBtn" type="button">ДА</button>
+            <button class="no-btn" id="noBtn" type="button" aria-disabled="true">НЕТ</button>
+          </div>
+          <div class="cat-panel" id="catPanel">／ᐠ｡ꞈ｡ᐟ＼
+НЕТ? Серьёзно?
+Злой котик просит подумать ещё раз 😾</div>
+        </section>
+
+        <section id="stepJoy" class="hidden">
+          <div class="joy-wrap">
+            <div>
+              <div class="big-heart">❤️</div>
+              <div class="joy-text">УРАААААА!</div>
+              <p class="subtitle">Жена уже внутренне хлопает в ладоши.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="stepCalendar" class="hidden">
+          <p class="kicker">шаг 1 из 2</p>
+          <h2>И ТАК... КОГДА ЖЕ ЭТО БУДЕТ?</h2>
+          <div class="form-grid">
+            <label>Дата
+              <input type="date" id="dateInput" required />
+            </label>
+            <label>Время
+              <select id="timeInput" required></select>
+            </label>
+          </div>
+          <div class="buttons">
+            <button class="primary" id="chooseDateBtn" type="button">❤️ВЫБРАТЬ❤️</button>
+          </div>
+          <p class="note" id="calendarNote">Выбери дату и время, чтобы перейти к плану свидания.</p>
+        </section>
+
+        <section id="stepActivities" class="hidden">
+          <p class="kicker">шаг 2 из 2</p>
+          <h2>ЧТО ЖЕ МЫ БУДЕМ ДЕЛАТЬ?</h2>
+          <div class="activity-grid" id="activitiesGrid"></div>
+          <div class="custom-box hidden" id="customBox">
+            <label>Твоё предложение
+              <textarea id="customIdea" maxlength="150" rows="3" placeholder="Например: поехать смотреть закат..." ></textarea>
+            </label>
+            <div class="counter" id="charCounter">Осталось 150 символов</div>
+          </div>
+          <div class="buttons">
+            <button class="primary" id="confirmBtn" type="button">ПРОДОЛЖИТЬ</button>
+          </div>
+          <p class="note" id="activityNote">Можно выбрать несколько вариантов.</p>
+        </section>
+
+        <section id="stepConfirm" class="hidden">
+          <p class="kicker">почти готово</p>
+          <h2>ОТПРАВИТЬ ПРЕДЛОЖЕНИЕ ЛЮБИМОЙ ЖЕНЕ?</h2>
+          <div class="summary" id="summaryBox"></div>
+          <form id="dateForm" action="https://formsubmit.co/reborndarya@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="ТВОЙ МУЖ ЗОВЕТ ТЕБЯ НА СВИДАНИЕ ❤️" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" id="nextUrl" value="" />
+            <input type="hidden" name="Дата" id="mailDate" />
+            <input type="hidden" name="Время" id="mailTime" />
+            <input type="hidden" name="Что будем делать" id="mailActivities" />
+            <input type="hidden" name="Ссылка с подробностями" id="mailDetailsLink" />
+            <div class="buttons">
+              <button class="primary" type="submit" id="sendBtn">ОТПРАВИТЬ 🚀</button>
+              <button class="ghost" type="button" id="backBtn">ИЗМЕНИТЬ</button>
+            </div>
+          </form>
+          <p class="note">Первое письмо через FormSubmit может потребовать подтверждения на почте получателя.</p>
+        </section>
+
+        <section id="stepSent" class="hidden">
+          <p class="kicker">миссия выполнена</p>
+          <h2>ПРЕДЛОЖЕНИЕ УЛЕТЕЛО 🚀</h2>
+          <p class="subtitle">Теперь ждём улыбку любимой жены и готовимся к свиданию.</p>
+          <div class="footer-heart">сделано с любовью</div>
+        </section>
+      </div>
+
+      <div class="inner hidden" id="wifeView">
+        <p class="kicker">приглашение на свидание</p>
+        <h2>ТВОЙ МУЖ ЗОВЁТ ТЕБЯ НА СВИДАНИЕ ❤️</h2>
+        <p class="subtitle">Вот что он выбрал для вашего вечера.</p>
+        <div class="summary" id="wifeSummary"></div>
+        <div class="footer-heart">романтика официально назначена</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const SECRET = "DARYA_DATE_2026";
+    const params = new URLSearchParams(window.location.search);
+    const hasAccess = params.get("secret") === SECRET || window.location.protocol === "file:";
+    const isDetails = params.get("view") === "details";
+
+    const husbandFlow = document.getElementById("husbandFlow");
+    const wifeView = document.getElementById("wifeView");
+    const accessDenied = document.getElementById("accessDenied");
+
+    if (!hasAccess) {
+      husbandFlow.classList.add("hidden");
+      wifeView.classList.add("hidden");
+      accessDenied.hidden = false;
+    }
+
+    const steps = ["stepInvite", "stepJoy", "stepCalendar", "stepActivities", "stepConfirm", "stepSent"];
+    const state = { date: "", time: "", activities: new Set(), custom: "" };
+
+    const activities = [
+      "ВКУСНО КУШАТЬ 🍔",
+      "ГУЛЯТЬ НОЖКАМИ 🐾",
+      "КУРИТЬ КАЛЬЯН 🫯",
+      "ИГРАТЬ В ПРИСТАВКУ 🕹️ В АНТИКАФЕ",
+      "ПО БАРАМ 🍹",
+      "ПОЙДЕМ В КИНО 🎥",
+      "СЮРПРИЗ ✨",
+      "ПРЕДЛОЖИ СВОЕ 😏"
+    ];
+
+    function showStep(id) {
+      steps.forEach(step => document.getElementById(step).classList.toggle("hidden", step !== id));
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return "—";
+      const [year, month, day] = dateString.split("-");
+      return `${day}.${month}.${year}`;
+    }
+
+    function encodeDetails() {
+      const selected = Array.from(state.activities);
+      if (state.custom.trim()) selected.push(`СВОЙ ВАРИАНТ: ${state.custom.trim()}`);
+      const detailParams = new URLSearchParams({
+        secret: SECRET,
+        view: "details",
+        date: state.date,
+        time: state.time,
+        activities: selected.join(" | ")
+      });
+      return `${window.location.origin}${window.location.pathname}?${detailParams.toString()}`;
+    }
+
+    function detailsHtml() {
+      const selected = Array.from(state.activities);
+      if (state.custom.trim()) selected.push(`СВОЙ ВАРИАНТ: ${state.custom.trim()}`);
+      return `
+        <div><strong>Дата:</strong> ${formatDate(state.date)}</div>
+        <div><strong>Время:</strong> ${state.time}</div>
+        <div><strong>План:</strong> ${selected.length ? selected.join("<br>") : "—"}</div>
+      `;
+    }
+
+    function createTimeOptions() {
+      const select = document.getElementById("timeInput");
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "Выбери время";
+      placeholder.disabled = true;
+      placeholder.selected = true;
+      select.appendChild(placeholder);
+
+      for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += 15) {
+          const value = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.appendChild(option);
+        }
+      }
+    }
+
+    function createActivityButtons() {
+      const grid = document.getElementById("activitiesGrid");
+      activities.forEach(name => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "activity";
+        btn.textContent = name;
+        btn.dataset.name = name;
+        btn.addEventListener("click", () => {
+          if (state.activities.has(name)) state.activities.delete(name);
+          else state.activities.add(name);
+          btn.classList.toggle("selected");
+          document.getElementById("customBox").classList.toggle("hidden", !state.activities.has("ПРЕДЛОЖИ СВОЕ 😏"));
+        });
+        grid.appendChild(btn);
+      });
+    }
+
+    function joyConfetti() {
+      const symbols = ["❤️", "💕", "✨", "💌", "🌙", "💫"];
+      for (let i = 0; i < 34; i++) {
+        const el = document.createElement("div");
+        el.className = "sparkle";
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.animationDuration = 1500 + Math.random() * 1700 + "ms";
+        el.style.animationDelay = Math.random() * 350 + "ms";
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 3600);
+      }
+    }
+
+    document.getElementById("yesBtn").addEventListener("click", () => {
+      showStep("stepJoy");
+      joyConfetti();
+      setTimeout(() => showStep("stepCalendar"), 1900);
+    });
+
+    const noBtn = document.getElementById("noBtn");
+    const catPanel = document.getElementById("catPanel");
+    noBtn.addEventListener("mouseenter", () => {
+      noBtn.textContent = "НЕТ НЕЛЬЗЯ 😾";
+      catPanel.classList.add("show");
+    });
+    noBtn.addEventListener("mouseleave", () => {
+      noBtn.textContent = "НЕТ";
+      catPanel.classList.remove("show");
+    });
+    noBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      joyConfetti();
+    });
+
+    document.getElementById("chooseDateBtn").addEventListener("click", () => {
+      const date = document.getElementById("dateInput").value;
+      const time = document.getElementById("timeInput").value;
+      const note = document.getElementById("calendarNote");
+      if (!date || !time) {
+        note.textContent = "Нужно выбрать и дату, и время — романтика любит конкретику.";
+        return;
+      }
+      state.date = date;
+      state.time = time;
+      showStep("stepActivities");
+    });
+
+    const customIdea = document.getElementById("customIdea");
+    customIdea.addEventListener("input", () => {
+      state.custom = customIdea.value;
+      document.getElementById("charCounter").textContent = `Осталось ${150 - customIdea.value.length} символов`;
+    });
+
+    document.getElementById("confirmBtn").addEventListener("click", () => {
+      const note = document.getElementById("activityNote");
+      if (state.activities.size === 0) {
+        note.textContent = "Выбери хотя бы один вариант, чтобы жене было что предвкушать.";
+        return;
+      }
+      if (state.activities.has("ПРЕДЛОЖИ СВОЕ 😏") && !state.custom.trim()) {
+        note.textContent = "Напиши своё предложение или убери этот вариант.";
+        customIdea.focus();
+        return;
+      }
+      const detailsUrl = encodeDetails();
+      document.getElementById("summaryBox").innerHTML = detailsHtml();
+      document.getElementById("mailDate").value = formatDate(state.date);
+      document.getElementById("mailTime").value = state.time;
+      document.getElementById("mailActivities").value = Array.from(state.activities).concat(state.custom.trim() ? [`СВОЙ ВАРИАНТ: ${state.custom.trim()}`] : []).join(" | ");
+      document.getElementById("mailDetailsLink").value = detailsUrl;
+      document.getElementById("nextUrl").value = detailsUrl;
+      showStep("stepConfirm");
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => showStep("stepActivities"));
+
+    document.getElementById("dateForm").addEventListener("submit", () => {
+      setTimeout(() => showStep("stepSent"), 600);
+    });
+
+    function renderDetailsView() {
+      husbandFlow.classList.add("hidden");
+      wifeView.classList.remove("hidden");
+      const date = params.get("date") || "";
+      const time = params.get("time") || "";
+      const activitiesRaw = params.get("activities") || "";
+      const acts = activitiesRaw ? activitiesRaw.split(" | ") : [];
+      document.getElementById("wifeSummary").innerHTML = `
+        <div><strong>Дата:</strong> ${formatDate(date)}</div>
+        <div><strong>Время:</strong> ${time || "—"}</div>
+        <div><strong>Что будем делать:</strong><br>${acts.length ? acts.map(item => item.replace(/[&<>]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[ch]))).join("<br>") : "—"}</div>
+      `;
+      joyConfetti();
+    }
+
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    document.getElementById("dateInput").min = `${yyyy}-${mm}-${dd}`;
+
+    createTimeOptions();
+    createActivityButtons();
+
+    if (hasAccess && isDetails) renderDetailsView();
+  </script>
 </body>
 </html>
