@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Свидание ❤️</title>
-  <!-- romantic-date-site version: ajax-final-no-wife-redirect-2026-06-17 -->
+  <!-- romantic-date-site version: share-link-no-email-2026-06-17 -->
   <style>
     :root {
       --bg-1: #fff7f7;
@@ -383,6 +383,37 @@
     }
 
 
+    .share-box {
+      margin-top: 22px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .share-input {
+      width: 100%;
+      min-height: 56px;
+      resize: none;
+      line-height: 1.35;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .copy-status {
+      min-height: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      margin-top: 8px;
+    }
+
+    .tiny-link-note {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
 
     @media (max-width: 640px) {
       body {
@@ -581,33 +612,30 @@
 
         <section id="stepConfirm" class="hidden">
           <p class="kicker">почти готово</p>
-          <h2>ОТПРАВИТЬ ПРЕДЛОЖЕНИЕ ЛЮБИМОЙ ЖЕНЕ?</h2>
+          <h2>ПОДТВЕРДИТЬ ПРЕДЛОЖЕНИЕ?</h2>
           <div class="summary" id="summaryBox"></div>
-          <form id="dateForm" action="https://formsubmit.co/reborndarya@gmail.com" data-ajax-action="https://formsubmit.co/ajax/reborndarya@gmail.com" method="POST">
-            <input type="hidden" name="_subject" value="ТВОЙ МУЖ ЗОВЕТ ТЕБЯ НА СВИДАНИЕ ❤️" />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" id="nextUrl" value="" />
-            <input type="hidden" name="Дата" id="mailDate" />
-            <input type="hidden" name="Время" id="mailTime" />
-            <input type="hidden" name="Что будем делать" id="mailActivities" />
-            <input type="hidden" name="Ссылка с подробностями" id="mailDetailsLink" />
-            <div class="buttons">
-              <button class="primary" type="submit" id="sendBtn">ОТПРАВИТЬ 🚀</button>
-              <button class="ghost" type="button" id="backBtn">ИЗМЕНИТЬ</button>
-            </div>
-            <div class="send-status" id="sendStatus" aria-live="polite"></div>
-          </form>
-          <p class="note">Первое письмо через FormSubmit может потребовать подтверждения на почте получателя.</p>
+          <div class="buttons">
+            <button class="primary" type="button" id="createLinkBtn">СОЗДАТЬ ССЫЛКУ ✨</button>
+            <button class="ghost" type="button" id="backBtn">ИЗМЕНИТЬ</button>
+          </div>
+          <p class="note">После подтверждения появится ссылка, которую можно отправить любимой жене.</p>
         </section>
 
-        <section id="stepSent" class="hidden">
-          <p class="kicker">миссия выполнена</p>
-          <h2>ПИСЬМО ОТПРАВЛЕНО 💌</h2>
-          <p class="subtitle">Подробности уже улетели любимой жене. Тут финал, секретная часть останется у неё.</p>
-          <div class="footer-heart">сделано с любовью</div>
-        </section>
-      </div>
+        <section id="stepShare" class="hidden">
+          <p class="kicker">готово</p>
+          <h2>ССЫЛКА НА СВИДАНИЕ ГОТОВА 💌</h2>
+          <p class="subtitle">Отправь эту ссылку жене — у неё откроется красивая карточка с подробностями свидания.</p>
+          <div class="summary" id="shareSummaryBox"></div>
+          <div class="share-box">
+            <textarea class="share-input" id="shareLinkInput" readonly rows="3"></textarea>
+            <div class="buttons">
+              <button class="primary" type="button" id="copyLinkBtn">СКОПИРОВАТЬ ССЫЛКУ</button>
+              <button class="ghost" type="button" id="nativeShareBtn">ПОДЕЛИТЬСЯ</button>
+            </div>
+            <div class="copy-status" id="copyStatus" aria-live="polite"></div>
+          </div>
+          <p class="tiny-link-note">Если кнопка «Поделиться» не открылась, скопируй ссылку и отправь её вручную в Telegram, WhatsApp или любом мессенджере.</p>
+        </section>      </div>
 
       <div class="inner hidden" id="wifeView">
         <p class="kicker">приглашение на свидание</p>
@@ -624,8 +652,7 @@
     const params = new URLSearchParams(window.location.search);
     const hasAccess = params.get("secret") === SECRET || window.location.protocol === "file:";
     const isDetails = params.get("view") === "details";
-    const isSent = params.get("view") === "sent";
-
+    
     const husbandFlow = document.getElementById("husbandFlow");
     const wifeView = document.getElementById("wifeView");
     const accessDenied = document.getElementById("accessDenied");
@@ -636,7 +663,7 @@
       accessDenied.hidden = false;
     }
 
-    const steps = ["stepInvite", "stepJoy", "stepCalendar", "stepActivities", "stepConfirm", "stepSent"];
+    const steps = ["stepInvite", "stepJoy", "stepCalendar", "stepActivities", "stepConfirm", "stepShare"];
     const state = { date: "", time: "", activities: new Set(), custom: "" };
 
     const activities = [
@@ -674,13 +701,7 @@
       return `${window.location.origin}${window.location.pathname}?${detailParams.toString()}`;
     }
 
-    function encodeSentUrl() {
-      const sentParams = new URLSearchParams({
-        secret: SECRET,
-        view: "sent"
-      });
-      return `${window.location.origin}${window.location.pathname}?${sentParams.toString()}`;
-    }
+    let generatedShareLink = "";
 
     function detailsHtml() {
       const selected = Array.from(state.activities);
@@ -812,55 +833,55 @@
         customIdea.focus();
         return;
       }
-      const detailsUrl = encodeDetails();
+      generatedShareLink = encodeDetails();
       document.getElementById("summaryBox").innerHTML = detailsHtml();
-      document.getElementById("mailDate").value = formatDate(state.date);
-      document.getElementById("mailTime").value = state.time;
-      document.getElementById("mailActivities").value = Array.from(state.activities).concat(state.custom.trim() ? [`СВОЙ ВАРИАНТ: ${state.custom.trim()}`] : []).join(" | ");
-      document.getElementById("mailDetailsLink").value = detailsUrl;
-      document.getElementById("nextUrl").value = encodeSentUrl();
       showStep("stepConfirm");
     });
 
     document.getElementById("backBtn").addEventListener("click", () => showStep("stepActivities"));
 
-    document.getElementById("dateForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
+    function setCopyStatus(text) {
+      document.getElementById("copyStatus").textContent = text;
+    }
 
-      const form = event.currentTarget;
-      const sendBtn = document.getElementById("sendBtn");
-      const backBtn = document.getElementById("backBtn");
-      const status = document.getElementById("sendStatus");
-      const formData = new FormData(form);
-      const payload = Object.fromEntries(formData.entries());
-
-      sendBtn.disabled = true;
-      backBtn.disabled = true;
-      sendBtn.textContent = "ОТПРАВЛЯЮ...";
-      status.classList.remove("error");
-      status.textContent = "Минуточку, письмо летит жене.";
-
+    async function copyShareLink() {
+      const input = document.getElementById("shareLinkInput");
+      input.focus();
+      input.select();
       try {
-        const response = await fetch(form.dataset.ajaxAction, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (!response.ok) throw new Error(`FormSubmit ответил статусом ${response.status}`);
-
-        window.history.replaceState(null, "", encodeSentUrl());
-        showStep("stepSent");
-        joyConfetti();
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(input.value);
+        } else {
+          document.execCommand("copy");
+        }
+        setCopyStatus("Ссылка скопирована. Теперь её можно отправить любимой жене 💌");
       } catch (error) {
-        status.classList.add("error");
-        status.textContent = "Не получилось отправить автоматически. Проверь интернет и нажми отправку ещё раз.";
-        sendBtn.disabled = false;
-        backBtn.disabled = false;
-        sendBtn.textContent = "ОТПРАВИТЬ 🚀";
+        setCopyStatus("Не получилось скопировать автоматически. Зажми ссылку и скопируй вручную.");
+      }
+    }
+
+    document.getElementById("createLinkBtn").addEventListener("click", () => {
+      generatedShareLink = generatedShareLink || encodeDetails();
+      document.getElementById("shareSummaryBox").innerHTML = detailsHtml();
+      document.getElementById("shareLinkInput").value = generatedShareLink;
+      setCopyStatus("");
+      showStep("stepShare");
+      joyConfetti();
+    });
+
+    document.getElementById("copyLinkBtn").addEventListener("click", copyShareLink);
+
+    document.getElementById("nativeShareBtn").addEventListener("click", async () => {
+      const shareText = "Твой муж зовёт тебя на свидание ❤️";
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: shareText, text: shareText, url: generatedShareLink || encodeDetails() });
+          setCopyStatus("Ссылка готова к отправке 💌");
+        } catch (error) {
+          setCopyStatus("Окно отправки закрылось. Можно просто скопировать ссылку ниже.");
+        }
+      } else {
+        await copyShareLink();
       }
     });
 
@@ -890,11 +911,6 @@
 
     if (hasAccess && isDetails) {
       renderDetailsView();
-    } else if (hasAccess && isSent) {
-      wifeView.classList.add("hidden");
-      husbandFlow.classList.remove("hidden");
-      showStep("stepSent");
-      joyConfetti();
     }
   </script>
 </body>
