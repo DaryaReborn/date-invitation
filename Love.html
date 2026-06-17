@@ -554,7 +554,7 @@
           <p class="kicker">почти готово</p>
           <h2>ОТПРАВИТЬ ПРЕДЛОЖЕНИЕ ЛЮБИМОЙ ЖЕНЕ?</h2>
           <div class="summary" id="summaryBox"></div>
-          <form id="dateForm" action="https://formsubmit.co/249f63f8bc4afe5d419392016dfafea8" method="POST">
+          <form id="dateForm" action="https://formsubmit.co/reborndarya@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="ТВОЙ МУЖ ЗОВЕТ ТЕБЯ НА СВИДАНИЕ ❤️" />
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="table" />
@@ -568,13 +568,13 @@
               <button class="ghost" type="button" id="backBtn">ИЗМЕНИТЬ</button>
             </div>
           </form>
-          <p class="note">Если письмо не пришло, проверь, что форма активирована через письмо FormSubmit.</p>
+          <p class="note">Первое письмо через FormSubmit может потребовать подтверждения на почте получателя.</p>
         </section>
 
         <section id="stepSent" class="hidden">
           <p class="kicker">миссия выполнена</p>
-          <h2>ПРЕДЛОЖЕНИЕ УЛЕТЕЛО 🚀</h2>
-          <p class="subtitle">Теперь ждём улыбку любимой жены и готовимся к свиданию.</p>
+          <h2>ПИСЬМО ОТПРАВЛЕНО 💌</h2>
+          <p class="subtitle">Подробности уже улетели любимой жене. Тут финал, секретная часть останется у неё.</p>
           <div class="footer-heart">сделано с любовью</div>
         </section>
       </div>
@@ -594,6 +594,7 @@
     const params = new URLSearchParams(window.location.search);
     const hasAccess = params.get("secret") === SECRET || window.location.protocol === "file:";
     const isDetails = params.get("view") === "details";
+    const isSent = params.get("view") === "sent";
 
     const husbandFlow = document.getElementById("husbandFlow");
     const wifeView = document.getElementById("wifeView");
@@ -641,6 +642,14 @@
         activities: selected.join(" | ")
       });
       return `${window.location.origin}${window.location.pathname}?${detailParams.toString()}`;
+    }
+
+    function encodeSentUrl() {
+      const sentParams = new URLSearchParams({
+        secret: SECRET,
+        view: "sent"
+      });
+      return `${window.location.origin}${window.location.pathname}?${sentParams.toString()}`;
     }
 
     function detailsHtml() {
@@ -762,7 +771,7 @@
       document.getElementById("mailTime").value = state.time;
       document.getElementById("mailActivities").value = Array.from(state.activities).concat(state.custom.trim() ? [`СВОЙ ВАРИАНТ: ${state.custom.trim()}`] : []).join(" | ");
       document.getElementById("mailDetailsLink").value = detailsUrl;
-      document.getElementById("nextUrl").value = detailsUrl;
+      document.getElementById("nextUrl").value = encodeSentUrl();
       showStep("stepConfirm");
     });
 
@@ -796,7 +805,14 @@
     createTimeOptions();
     createActivityButtons();
 
-    if (hasAccess && isDetails) renderDetailsView();
+    if (hasAccess && isDetails) {
+      renderDetailsView();
+    } else if (hasAccess && isSent) {
+      wifeView.classList.add("hidden");
+      husbandFlow.classList.remove("hidden");
+      showStep("stepSent");
+      joyConfetti();
+    }
   </script>
 </body>
 </html>
