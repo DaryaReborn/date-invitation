@@ -155,12 +155,6 @@
     }
 
     .primary:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(200, 111, 123, 0.34); }
-
-    button:disabled {
-      opacity: 0.72;
-      cursor: wait;
-      transform: none !important;
-    }
     .primary:active { transform: translateY(1px); }
 
     .ghost {
@@ -205,16 +199,6 @@
     }
 
     .hidden { display: none !important; }
-
-    .hidden-frame {
-      display: none;
-      width: 0;
-      height: 0;
-      border: 0;
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
 
     .joy-wrap {
       display: grid;
@@ -570,10 +554,11 @@
           <p class="kicker">почти готово</p>
           <h2>ОТПРАВИТЬ ПРЕДЛОЖЕНИЕ ЛЮБИМОЙ ЖЕНЕ?</h2>
           <div class="summary" id="summaryBox"></div>
-          <form id="dateForm" action="https://formsubmit.co/249f63f8bc4afe5d419392016dfafea8" method="POST" target="formSubmitFrame">
+          <form id="dateForm" action="https://formsubmit.co/249f63f8bc4afe5d419392016dfafea8" method="POST">
             <input type="hidden" name="_subject" value="ТВОЙ МУЖ ЗОВЕТ ТЕБЯ НА СВИДАНИЕ ❤️" />
             <input type="hidden" name="_captcha" value="false" />
             <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_next" id="nextUrl" value="" />
             <input type="hidden" name="Дата" id="mailDate" />
             <input type="hidden" name="Время" id="mailTime" />
             <input type="hidden" name="Что будем делать" id="mailActivities" />
@@ -583,14 +568,13 @@
               <button class="ghost" type="button" id="backBtn">ИЗМЕНИТЬ</button>
             </div>
           </form>
-          <iframe name="formSubmitFrame" id="formSubmitFrame" title="Служебная отправка формы" class="hidden"></iframe>
-          <p class="note" id="sendNote">После нажатия не закрывай страницу пару секунд — письмо улетает любимой жене.</p>
+          <p class="note">Если письмо не пришло, проверь, что форма активирована через письмо FormSubmit.</p>
         </section>
 
         <section id="stepSent" class="hidden">
           <p class="kicker">миссия выполнена</p>
-          <h2>ПИСЬМО ОТПРАВЛЕНО 💌</h2>
-          <p class="subtitle">Подробности уже улетели любимой жене. Теперь можно готовиться к свиданию.</p>
+          <h2>ПРЕДЛОЖЕНИЕ УЛЕТЕЛО 🚀</h2>
+          <p class="subtitle">Теперь ждём улыбку любимой жены и готовимся к свиданию.</p>
           <div class="footer-heart">сделано с любовью</div>
         </section>
       </div>
@@ -610,7 +594,6 @@
     const params = new URLSearchParams(window.location.search);
     const hasAccess = params.get("secret") === SECRET || window.location.protocol === "file:";
     const isDetails = params.get("view") === "details";
-    const isSent = params.get("sent") === "1";
 
     const husbandFlow = document.getElementById("husbandFlow");
     const wifeView = document.getElementById("wifeView");
@@ -658,14 +641,6 @@
         activities: selected.join(" | ")
       });
       return `${window.location.origin}${window.location.pathname}?${detailParams.toString()}`;
-    }
-
-    function encodeSentPage() {
-      const sentParams = new URLSearchParams({
-        secret: SECRET,
-        sent: "1"
-      });
-      return `${window.location.origin}${window.location.pathname}?${sentParams.toString()}`;
     }
 
     function detailsHtml() {
@@ -787,21 +762,14 @@
       document.getElementById("mailTime").value = state.time;
       document.getElementById("mailActivities").value = Array.from(state.activities).concat(state.custom.trim() ? [`СВОЙ ВАРИАНТ: ${state.custom.trim()}`] : []).join(" | ");
       document.getElementById("mailDetailsLink").value = detailsUrl;
+      document.getElementById("nextUrl").value = detailsUrl;
       showStep("stepConfirm");
     });
 
     document.getElementById("backBtn").addEventListener("click", () => showStep("stepActivities"));
 
     document.getElementById("dateForm").addEventListener("submit", () => {
-      const sendBtn = document.getElementById("sendBtn");
-      const sendNote = document.getElementById("sendNote");
-      sendBtn.disabled = true;
-      sendBtn.textContent = "ОТПРАВЛЯЮ... 💌";
-      if (sendNote) sendNote.textContent = "Письмо отправляется. Сейчас появится финальный экран.";
-      setTimeout(() => {
-        joyConfetti();
-        showStep("stepSent");
-      }, 1300);
+      setTimeout(() => showStep("stepSent"), 600);
     });
 
     function renderDetailsView() {
@@ -829,7 +797,6 @@
     createActivityButtons();
 
     if (hasAccess && isDetails) renderDetailsView();
-    else if (hasAccess && isSent) showStep("stepSent");
   </script>
 </body>
 </html>
