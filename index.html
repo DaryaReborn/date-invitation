@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- version: dating-site-v10-date-selects-no-native-input -->
+<!-- version: dating-site-v11-compact-date-time-real -->
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
@@ -8,77 +8,53 @@
 <title>Свидание ❤️</title>
 <style>
 :root{
-  --bg1:#fff7f7;
-  --bg2:#ffeaf1;
-  --bg3:#fff3df;
-  --text:#342326;
-  --muted:#8a6970;
-  --accent:#c86d80;
-  --accent-dark:#9e4f61;
-  --line:rgba(82,48,56,.16);
-  --card:rgba(255,255,255,.9);
-  --shadow:0 24px 72px rgba(101,54,65,.16);
-  --radius:30px;
+  --bg1:#fff7f7; --bg2:#ffe9f0; --bg3:#fff2de;
+  --text:#342326; --muted:#8b6670; --accent:#c96d80; --accent2:#a84d61;
+  --line:rgba(93,56,64,.15); --card:rgba(255,255,255,.92);
+  --shadow:0 20px 55px rgba(115,58,72,.15); --radius:26px;
   --font:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
-html{width:100%;min-height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%;color-scheme:light;overflow-x:hidden}
+html{width:100%;min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;color-scheme:light}
 body{
-  margin:0;width:100%;min-width:320px;min-height:100svh;overflow-x:hidden;
-  color:var(--text);font-family:var(--font);
+  margin:0; width:100%; min-width:320px; min-height:100svh; overflow-x:hidden;
+  font-family:var(--font); color:var(--text);
   background:
-    radial-gradient(circle at 12% 8%,rgba(255,205,218,.72),transparent 32%),
-    radial-gradient(circle at 92% 10%,rgba(255,236,193,.76),transparent 34%),
-    radial-gradient(circle at 70% 96%,rgba(235,215,255,.48),transparent 34%),
-    linear-gradient(135deg,var(--bg1),var(--bg2) 48%,var(--bg3));
+    radial-gradient(circle at 10% 9%,rgba(255,198,213,.70),transparent 31%),
+    radial-gradient(circle at 92% 10%,rgba(255,233,187,.74),transparent 34%),
+    radial-gradient(circle at 68% 98%,rgba(236,215,255,.44),transparent 35%),
+    linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3));
 }
-button,select,textarea{font:inherit;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;-webkit-tap-highlight-color:transparent}
 button{border:0;cursor:pointer;touch-action:manipulation}
 button:active{transform:scale(.985)}
 .app{
-  width:100%;min-height:100svh;position:relative;z-index:1;
-  display:flex;align-items:flex-start;justify-content:center;
-  padding:max(16px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(92px,calc(env(safe-area-inset-bottom) + 34px)) max(14px,env(safe-area-inset-left));
+  width:100%; min-height:100svh; display:flex; justify-content:center; align-items:flex-start;
+  padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(90px,calc(env(safe-area-inset-bottom) + 28px)) max(12px,env(safe-area-inset-left));
 }
 .card{
-  width:100%;max-width:560px;margin:0 auto;
-  border:1px solid rgba(255,255,255,.82);border-radius:var(--radius);
-  background:var(--card);box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  overflow:hidden;
+  width:min(100%,430px); margin:0 auto; border-radius:var(--radius); overflow:hidden;
+  background:var(--card); border:1px solid rgba(255,255,255,.82); box-shadow:var(--shadow);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
 }
-.inner{width:100%;padding:clamp(22px,5.2vw,42px)}
+.inner{width:100%; padding:clamp(18px,5.1vw,30px)}
 .hidden{display:none!important}
-.kicker{margin:0 0 14px;color:var(--accent-dark);font-size:clamp(11px,2.9vw,14px);font-weight:950;letter-spacing:.18em;text-transform:uppercase}
-h1,h2{margin:0;line-height:1.06;letter-spacing:-.045em;font-weight:950;overflow-wrap:break-word;word-break:normal;text-wrap:balance}
-h1{font-size:clamp(30px,9.1vw,48px)}
-h2{font-size:clamp(30px,8.7vw,46px)}
-.subtitle,.note,.status,.counter{margin:16px 0 0;color:var(--muted);font-size:clamp(15px,3.8vw,18px);line-height:1.48}.note,.status,.counter{font-size:14px}.error{color:var(--accent-dark);font-weight:900}
-.stack{display:grid;gap:14px;margin-top:24px}.buttons{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px}
-.primary,.ghost,.choice,.activity,.sharebtn{
-  width:100%;min-width:0;min-height:54px;padding:15px 18px;border-radius:999px;
-  font-weight:950;letter-spacing:.025em;text-align:center;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
-}
-.primary,.choice,.sharebtn{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-dark));box-shadow:0 14px 28px rgba(158,79,97,.22)}
-.ghost{color:var(--accent-dark);background:rgba(255,255,255,.72);border:1px solid var(--line)}
-.choicegrid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px}.choice{min-height:90px;border-radius:24px;display:grid;place-items:center;gap:6px}.choice .emoji{font-size:32px}.choice b{font-size:16px}
-.joy{min-height:250px;display:grid;place-items:center;text-align:center}.heart{font-size:clamp(62px,17vw,110px);animation:pulse 1.1s ease-in-out infinite}.joytitle{margin-top:10px;color:var(--accent-dark);font-size:clamp(34px,9vw,62px);font-weight:950;line-height:1;letter-spacing:-.05em}@keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.14) rotate(4deg)}}
-.field{display:grid;gap:9px;width:100%;min-width:0}.field span{color:var(--muted);font-size:13px;font-weight:950;letter-spacing:.16em;text-transform:uppercase}.dateparts{width:100%;min-width:0;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,.85fr) minmax(0,1.1fr);gap:8px}
-.control,textarea{
-  display:block;width:100%;min-width:0;max-width:100%;height:58px;
-  border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.86);
-  color:var(--text);outline:0;padding:0 14px;font-size:16px;font-weight:850;line-height:1.2;
-  box-shadow:none;appearance:auto;-webkit-appearance:menulist;
-}
-.control:focus,textarea:focus{border-color:rgba(199,107,126,.58);box-shadow:0 0 0 4px rgba(199,107,126,.12)}
-textarea{height:auto;min-height:96px;padding:14px;resize:vertical;font-weight:650;appearance:none;-webkit-appearance:none;line-height:1.45}
-.activities{display:grid;grid-template-columns:1fr;gap:11px;margin-top:24px}.activity{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.76);color:var(--text);font-size:14px;line-height:1.2;text-align:left;white-space:normal;overflow-wrap:anywhere}.activity.selected{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-color:transparent;box-shadow:0 12px 26px rgba(158,79,97,.18)}
-.summary,.linkbox{display:grid;gap:10px;margin-top:20px;padding:16px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.68);line-height:1.45;overflow-wrap:anywhere}.summary strong{color:var(--accent-dark)}.linkbox{display:block;font-size:14px;user-select:all}.sharegrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:14px}.sharebtn{border-radius:18px}.footer{margin-top:22px;color:var(--accent-dark);font-size:13px;font-weight:950;letter-spacing:.14em;text-transform:uppercase}.sparkle{position:fixed;top:-36px;z-index:20;pointer-events:none;animation:fall linear forwards;font-size:22px}@keyframes fall{to{transform:translateY(112svh) rotate(360deg);opacity:0}}
-@media (max-width:360px){.app{padding-left:10px;padding-right:10px}.inner{padding:20px 16px}.dateparts{grid-template-columns:1fr}.control{height:54px}h1{font-size:29px}h2{font-size:28px}}
-@media (min-width:520px){.choicegrid{grid-template-columns:1fr 1fr}.sharegrid{grid-template-columns:1fr 1fr}.activities{grid-template-columns:1fr 1fr}.activity{text-align:center}.buttons.two{grid-template-columns:1fr 1fr}}
-@media (min-width:760px){.app{align-items:center;padding:42px 24px}.card{max-width:620px}.inner{padding:46px}h1{font-size:54px}h2{font-size:52px}.stack{gap:16px}.control{height:62px}.dateparts{gap:12px}}
-@media (min-width:1100px){.card{max-width:680px}.inner{padding:54px}h1{font-size:58px}h2{font-size:56px}}
-@media (orientation:landscape) and (max-height:520px){.app{align-items:flex-start;padding:12px max(18px,env(safe-area-inset-right)) 24px max(18px,env(safe-area-inset-left))}.card{max-width:760px}.inner{padding:22px 26px;max-height:calc(100svh - 32px);overflow:auto}h1{font-size:clamp(28px,5vw,42px)}h2{font-size:clamp(28px,5vw,40px)}.joy{min-height:180px}.stack{gap:10px;margin-top:18px}.control{height:52px}.primary,.ghost,.activity,.sharebtn{min-height:48px;padding:12px 16px}}
+.kicker{margin:0 0 12px; color:var(--accent2); font-size:clamp(11px,2.7vw,13px); font-weight:950; letter-spacing:.18em; text-transform:uppercase}
+h1,h2{margin:0; font-weight:950; letter-spacing:-.045em; line-height:1.04; overflow-wrap:break-word; text-wrap:balance}
+h1{font-size:clamp(29px,8.3vw,42px)}
+h2{font-size:clamp(30px,8.5vw,43px)}
+.subtitle,.note,.status,.counter{margin:14px 0 0; color:var(--muted); font-size:clamp(14px,3.7vw,17px); line-height:1.45}.note,.status,.counter{font-size:14px}.error{color:var(--accent2);font-weight:900}
+.choicegrid{display:grid;grid-template-columns:1fr;gap:11px;margin-top:22px}.choice{min-height:84px;border-radius:22px;padding:16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 13px 26px rgba(168,77,97,.20);font-weight:950}.choice .emoji{display:block;font-size:30px;margin-bottom:4px}.choice b{font-size:16px;letter-spacing:.03em}
+.joy{min-height:210px;display:grid;place-items:center;text-align:center}.heart{font-size:clamp(58px,16vw,94px);animation:pulse 1.08s ease-in-out infinite}.joytitle{margin-top:10px;color:var(--accent2);font-size:clamp(32px,8.8vw,54px);font-weight:950;line-height:1;letter-spacing:-.05em}@keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.13) rotate(4deg)}}
+.stack{display:grid;gap:14px;margin-top:22px}.compact-panel{display:grid;gap:12px;padding:14px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.55);width:100%;min-width:0;overflow:hidden}.field{display:grid;gap:8px;width:100%;min-width:0}.field span{color:var(--muted);font-size:12px;font-weight:950;letter-spacing:.17em;text-transform:uppercase}.date-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.28fr);gap:8px;width:100%;min-width:0}.small-field{position:relative;min-width:0}.small-field label{position:absolute;left:11px;top:7px;font-size:9px;font-weight:950;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;pointer-events:none}.control,.mini-control,textarea{width:100%;min-width:0;max-width:100%;border:1px solid var(--line);background:rgba(255,255,255,.86);color:var(--text);outline:0;box-shadow:none}.control{height:52px;border-radius:18px;padding:0 14px;font-size:16px;font-weight:850;line-height:1.15}.mini-control{height:54px;border-radius:16px;padding:20px 8px 6px;text-align:center;font-size:16px;font-weight:900;line-height:1.1;appearance:none;-webkit-appearance:none}.mini-control::placeholder{color:#b39aa0;opacity:1}.control:focus,.mini-control:focus,textarea:focus{border-color:rgba(201,109,128,.62);box-shadow:0 0 0 4px rgba(201,109,128,.12)}
+.buttons{display:grid;grid-template-columns:1fr;gap:11px;margin-top:22px}.primary,.ghost,.activity,.sharebtn{width:100%;min-width:0;min-height:52px;padding:14px 16px;border-radius:999px;font-weight:950;letter-spacing:.025em;text-align:center}.primary,.sharebtn{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 13px 28px rgba(168,77,97,.22)}.ghost{color:var(--accent2);background:rgba(255,255,255,.76);border:1px solid var(--line)}
+.activities{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}.activity{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.76);color:var(--text);font-size:14px;line-height:1.22;text-align:left;white-space:normal;overflow-wrap:anywhere}.activity.selected{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;box-shadow:0 12px 24px rgba(168,77,97,.18)}
+textarea{min-height:92px;padding:13px;border-radius:18px;resize:vertical;font-weight:650;line-height:1.4;appearance:none;-webkit-appearance:none}.summary,.linkbox{display:grid;gap:9px;margin-top:18px;padding:15px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.66);line-height:1.43;overflow-wrap:anywhere}.summary strong{color:var(--accent2)}.linkbox{display:block;font-size:13px;user-select:all}.sharegrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:13px}.sharebtn{border-radius:17px}.footer{margin-top:20px;color:var(--accent2);font-size:12px;font-weight:950;letter-spacing:.14em;text-transform:uppercase}.sparkle{position:fixed;top:-36px;z-index:20;pointer-events:none;animation:fall linear forwards;font-size:22px}@keyframes fall{to{transform:translateY(112svh) rotate(360deg);opacity:0}}
+@media (max-width:370px){.app{padding-left:9px;padding-right:9px}.card{width:min(100%,400px);border-radius:22px}.inner{padding:17px 14px}h1{font-size:27px}h2{font-size:28px}.date-grid{gap:6px}.mini-control{font-size:15px;padding-left:5px;padding-right:5px}.control{height:50px}.primary,.ghost,.activity,.sharebtn{min-height:50px}}
+@media (min-width:520px){.card{width:min(100%,520px)}.choicegrid{grid-template-columns:1fr 1fr}.sharegrid{grid-template-columns:1fr 1fr}.activities{grid-template-columns:1fr 1fr}.activity{text-align:center}.buttons.two{grid-template-columns:1fr 1fr}}
+@media (min-width:760px){.app{align-items:center;padding:38px 24px}.card{width:min(100%,560px)}.inner{padding:38px}h1{font-size:48px}h2{font-size:46px}.compact-panel{padding:16px}.control{height:56px}.mini-control{height:56px}.stack{gap:16px}.joy{min-height:250px}}
+@media (min-width:1100px){.card{width:min(100%,600px)}.inner{padding:44px}h1{font-size:52px}h2{font-size:50px}}
+@media (orientation:landscape) and (max-height:540px){.app{align-items:flex-start;padding:10px max(16px,env(safe-area-inset-right)) 22px max(16px,env(safe-area-inset-left))}.card{width:min(100%,720px)}.inner{padding:20px 24px;max-height:calc(100svh - 24px);overflow:auto}h1{font-size:clamp(28px,5.4vw,40px)}h2{font-size:clamp(28px,5.2vw,39px)}.joy{min-height:160px}.stack{gap:10px;margin-top:16px}.compact-panel{padding:12px;gap:10px}.control,.mini-control{height:48px}.mini-control{padding-top:18px}.primary,.ghost,.activity,.sharebtn{min-height:46px;padding:11px 14px}.activities{grid-template-columns:1fr 1fr}.subtitle,.note{font-size:14px}}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -89,7 +65,7 @@ textarea{height:auto;min-height:96px;padding:14px;resize:vertical;font-weight:65
   <section class="inner" id="maker">
     <div id="stepWho"><p class="kicker">мини‑приглашение</p><h1>ДЛЯ КОГО<br>БУДЕМ ДЕЛАТЬ<br>ПРИГЛАШЕНИЕ?</h1><p class="subtitle">Выбери, кому полетит романтичная ссылка со свиданием.</p><div class="choicegrid"><button class="choice" type="button" data-target="wife"><span class="emoji">💗</span><b>ДЛЯ ЖЕНЫ</b></button><button class="choice" type="button" data-target="husband"><span class="emoji">❤️</span><b>ДЛЯ МУЖА</b></button></div></div>
     <div id="stepJoy" class="hidden"><div class="joy"><div><div class="heart" id="joyIcon">❤️</div><div class="joytitle">УРАААААА!</div><p class="subtitle" id="joyText">Кто-то уже очень рад.</p></div></div></div>
-    <div id="stepCalendar" class="hidden"><p class="kicker">шаг 1 из 2</p><h2>И ТАК...<br>КОГДА ЖЕ<br>ЭТО БУДЕТ?</h2><div class="stack"><label class="field"><span>Дата</span><div class="dateparts"><select class="control" id="day" aria-label="День"></select><select class="control" id="month" aria-label="Месяц"></select><select class="control" id="year" aria-label="Год"></select></div></label><label class="field"><span>Время</span><select class="control" id="time"></select></label></div><div class="buttons"><button class="primary" id="dateNext" type="button">❤️ ВЫБРАТЬ ❤️</button></div><p class="note" id="dateNote">Выбери дату и время, чтобы перейти к плану свидания.</p></div>
+    <div id="stepCalendar" class="hidden"><p class="kicker">шаг 1 из 2</p><h2>И ТАК...<br>КОГДА ЖЕ<br>ЭТО БУДЕТ?</h2><div class="stack"><div class="compact-panel"><label class="field"><span>Дата</span><div class="date-grid"><div class="small-field"><label for="day">день</label><input class="mini-control" id="day" inputmode="numeric" maxlength="2" placeholder="18" autocomplete="off"></div><div class="small-field"><label for="month">месяц</label><input class="mini-control" id="month" inputmode="numeric" maxlength="2" placeholder="06" autocomplete="off"></div><div class="small-field"><label for="year">год</label><input class="mini-control" id="year" inputmode="numeric" maxlength="4" placeholder="2026" autocomplete="off"></div></div></label><label class="field"><span>Время</span><select class="control" id="time"></select></label></div></div><div class="buttons"><button class="primary" id="dateNext" type="button">❤️ ВЫБРАТЬ ❤️</button></div><p class="note" id="dateNote">Выбери дату и время, чтобы перейти к плану свидания.</p></div>
     <div id="stepPlan" class="hidden"><p class="kicker">шаг 2 из 2</p><h2>ЧТО ЖЕ МЫ<br>БУДЕМ ДЕЛАТЬ?</h2><div class="activities" id="activities"></div><div class="stack hidden" id="customBox"><label class="field"><span>Твоё предложение</span><textarea id="custom" maxlength="150" placeholder="Например: поехать смотреть закат..."></textarea></label><div class="counter" id="count">Осталось 150 символов</div></div><div class="buttons"><button class="primary" id="planNext" type="button">ПРОДОЛЖИТЬ</button></div><p class="note" id="planNote">Можно выбрать несколько вариантов.</p></div>
     <div id="stepConfirm" class="hidden"><p class="kicker">почти готово</p><h2 id="confirmTitle">СФОРМИРОВАТЬ ССЫЛКУ?</h2><div class="summary" id="summary"></div><div class="buttons two"><button class="primary" id="makeLink" type="button">СФОРМИРОВАТЬ 💌</button><button class="ghost" id="back" type="button">ИЗМЕНИТЬ</button></div></div>
     <div id="stepShare" class="hidden"><p class="kicker">готово</p><h2 id="shareTitle">ССЫЛКА ГОТОВА 💌</h2><p class="subtitle" id="shareSub">Отправь эту ссылку любимому человеку.</p><div class="summary" id="shareSummary"></div><div class="linkbox" id="shareLink"></div><div class="sharegrid"><button class="sharebtn" id="copyBtn" type="button">СКОПИРОВАТЬ</button><button class="sharebtn" id="shareBtn" type="button">ПОДЕЛИТЬСЯ</button></div><p class="status" id="status"></p><div class="footer">романтика официально запланирована</div></div>
@@ -112,16 +88,28 @@ const text={
 const activityList=["ВКУСНО КУШАТЬ 🍔","ГУЛЯТЬ НОЖКАМИ 🐾","КУРИТЬ КАЛЬЯН 🫯","ИГРАТЬ В ПРИСТАВКУ 🕹️","ПО БАРАМ 🍹","ПОЙДЕМ В КИНО 🎥","СЮРПРИЗ ✨","ПРЕДЛОЖИ СВОЕ 😏"];
 function esc(v){return String(v).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function show(id){steps.forEach(s=>$(s).classList.toggle("hidden",s!==id));requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"smooth"}))}
-function dateText(){return state.day&&state.month&&state.year?`${state.day}.${state.month}.${state.year}`:"—"}
+function digits(el,max){el.value=el.value.replace(/\D/g,"").slice(0,max)}
+[ ["day",2], ["month",2], ["year",4] ].forEach(([id,max])=>{$(id).addEventListener("input",()=>digits($(id),max))});
+function normalizedDate(){
+  let d=$("day").value.padStart(2,"0"), m=$("month").value.padStart(2,"0"), y=$("year").value;
+  if(!d||!m||!y) return "";
+  return `${d}.${m}.${y}`;
+}
+function dateIsValid(){
+  let d=Number($("day").value), m=Number($("month").value), y=Number($("year").value);
+  if(!d||!m||!y||y<2026||m<1||m>12||d<1||d>31) return false;
+  let dt=new Date(y,m-1,d);
+  return dt.getFullYear()===y && dt.getMonth()===m-1 && dt.getDate()===d;
+}
 function picked(){let arr=[...state.selected];if(state.custom.trim())arr.push("СВОЙ ВАРИАНТ: "+state.custom.trim());return arr}
-function summaryHtml(date=dateText(),time=state.time,arr=picked()){return `<div><strong>Дата:</strong> ${esc(date||"—")}</div><div><strong>Время:</strong> ${esc(time||"—")}</div><div><strong>Что будем делать:</strong><br>${arr.length?arr.map(esc).join("<br>"):"—"}</div>`}
-function makeDetailsUrl(){let q=new URLSearchParams({secret:SECRET,view:"details",target:state.target,date:dateText(),time:state.time,activities:picked().join(" | ")});return `${location.origin}${location.pathname}?${q.toString()}`}
+function summaryHtml(date=state.date,time=state.time,arr=picked()){return `<div><strong>Дата:</strong> ${esc(date||"—")}</div><div><strong>Время:</strong> ${esc(time||"—")}</div><div><strong>Что будем делать:</strong><br>${arr.length?arr.map(esc).join("<br>"):"—"}</div>`}
+function makeDetailsUrl(){let q=new URLSearchParams({secret:SECRET,view:"details",target:state.target,date:state.date,time:state.time,activities:picked().join(" | ")});return `${location.origin}${location.pathname}?${q.toString()}`}
 function confetti(){for(let i=0;i<28;i++){let e=document.createElement("div");e.className="sparkle";e.textContent=["❤️","💕","✨","💌","🌙","💫"][Math.floor(Math.random()*6)];e.style.left=Math.random()*100+"vw";e.style.animationDuration=1500+Math.random()*1600+"ms";e.style.animationDelay=Math.random()*300+"ms";document.body.append(e);setTimeout(()=>e.remove(),3500)}}
-function fillSelect(select,placeholder,values){select.innerHTML="";let p=document.createElement("option");p.textContent=placeholder;p.value="";p.disabled=true;p.selected=true;select.append(p);values.forEach(([val,label])=>{let o=document.createElement("option");o.value=val;o.textContent=label;select.append(o)})}
-function initControls(){fillSelect($("day"),"День",Array.from({length:31},(_,i)=>[String(i+1).padStart(2,"0"),String(i+1).padStart(2,"0")]));fillSelect($("month"),"Месяц",Array.from({length:12},(_,i)=>[String(i+1).padStart(2,"0"),String(i+1).padStart(2,"0")]));let y=new Date().getFullYear();fillSelect($("year"),"Год",Array.from({length:5},(_,i)=>[String(y+i),String(y+i)]));let time=[];for(let h=0;h<24;h++)for(let m=0;m<60;m+=15){let v=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;time.push([v,v])}fillSelect($("time"),"Выбери время",time);activityList.forEach(name=>{let b=document.createElement("button");b.type="button";b.className="activity";b.textContent=name;b.onclick=()=>{state.selected.has(name)?state.selected.delete(name):state.selected.add(name);b.classList.toggle("selected",state.selected.has(name));$("customBox").classList.toggle("hidden",!state.selected.has("ПРЕДЛОЖИ СВОЕ 😏"))};$("activities").append(b)})}
-initControls();
+function fillTime(){let s=$("time");s.innerHTML="";let p=document.createElement("option");p.textContent="Выбери время";p.value="";p.disabled=true;p.selected=true;s.append(p);for(let h=0;h<24;h++)for(let m=0;m<60;m+=15){let v=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;let o=document.createElement("option");o.value=v;o.textContent=v;s.append(o)}}
+function initActivities(){activityList.forEach(name=>{let b=document.createElement("button");b.type="button";b.className="activity";b.textContent=name;b.onclick=()=>{state.selected.has(name)?state.selected.delete(name):state.selected.add(name);b.classList.toggle("selected",state.selected.has(name));$("customBox").classList.toggle("hidden",!state.selected.has("ПРЕДЛОЖИ СВОЕ 😏"))};$("activities").append(b)})}
+fillTime();initActivities();
 document.querySelectorAll("[data-target]").forEach(b=>b.onclick=()=>{state.target=b.dataset.target;let c=text[state.target];$("joyIcon").textContent=c.icon;$("joyText").textContent=c.joy;$("confirmTitle").textContent=c.confirm;show("stepJoy");confetti();setTimeout(()=>show("stepCalendar"),1500)});
-$("dateNext").onclick=()=>{state.day=$("day").value;state.month=$("month").value;state.year=$("year").value;state.time=$("time").value;let note=$("dateNote");note.classList.remove("error");if(!state.day||!state.month||!state.year||!state.time){note.textContent="Нужно выбрать дату и время — романтика любит конкретику.";note.classList.add("error");return}note.textContent="Выбери дату и время, чтобы перейти к плану свидания.";show("stepPlan")};
+$("dateNext").onclick=()=>{let note=$("dateNote");note.classList.remove("error");state.date=normalizedDate();state.time=$("time").value;if(!dateIsValid()||!state.time){note.textContent="Нужно выбрать корректную дату и время — романтика любит конкретику.";note.classList.add("error");return}note.textContent="Выбери дату и время, чтобы перейти к плану свидания.";show("stepPlan")};
 $("custom").oninput=()=>{state.custom=$("custom").value;$("count").textContent=`Осталось ${150-state.custom.length} символов`};
 $("planNext").onclick=()=>{let note=$("planNote");note.classList.remove("error");if(!state.selected.size){note.textContent="Выбери хотя бы один вариант, чтобы было что предвкушать.";note.classList.add("error");return}if(state.selected.has("ПРЕДЛОЖИ СВОЕ 😏")&&!state.custom.trim()){note.textContent="Напиши своё предложение или убери этот вариант.";note.classList.add("error");$("custom").focus();return}$("summary").innerHTML=summaryHtml();show("stepConfirm")};
 $("back").onclick=()=>show("stepPlan");
