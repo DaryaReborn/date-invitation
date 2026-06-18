@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- version: dating-site-v12-select-date-auto-clamp-real -->
+<!-- version: dating-site-v11-compact-date-time-real -->
 <html lang="ru">
 <head>
 <meta charset="utf-8" />
@@ -8,112 +8,116 @@
 <title>Свидание ❤️</title>
 <style>
 :root{
-  --bg1:#fff7f7;
-  --bg2:#ffe8ef;
-  --bg3:#fff0da;
-  --text:#352426;
-  --muted:#8a6570;
-  --accent:#c96f82;
-  --accent-dark:#9d4d5f;
-  --line:rgba(104,61,70,.15);
-  --card:rgba(255,255,255,.92);
-  --soft:rgba(255,255,255,.72);
-  --shadow:0 20px 56px rgba(108,53,66,.15);
-  --radius:28px;
+  --bg1:#fff7f7; --bg2:#ffe9f0; --bg3:#fff2de;
+  --text:#342326; --muted:#8b6670; --accent:#c96d80; --accent2:#a84d61;
+  --line:rgba(93,56,64,.15); --card:rgba(255,255,255,.92);
+  --shadow:0 20px 55px rgba(115,58,72,.15); --radius:26px;
   --font:ui-rounded,"SF Pro Rounded","Nunito","Segoe UI",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
 html{width:100%;min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;color-scheme:light}
 body{
-  margin:0;width:100%;min-width:320px;min-height:100dvh;overflow-x:hidden;
-  font-family:var(--font);color:var(--text);
+  margin:0; width:100%; min-width:320px; min-height:100svh; overflow-x:hidden;
+  font-family:var(--font); color:var(--text);
   background:
-    radial-gradient(circle at 12% 9%,rgba(255,199,214,.72),transparent 31%),
-    radial-gradient(circle at 92% 10%,rgba(255,232,190,.72),transparent 34%),
-    radial-gradient(circle at 66% 98%,rgba(226,211,255,.36),transparent 38%),
-    linear-gradient(135deg,var(--bg1),var(--bg2) 54%,var(--bg3));
+    radial-gradient(circle at 10% 9%,rgba(255,198,213,.70),transparent 31%),
+    radial-gradient(circle at 92% 10%,rgba(255,233,187,.74),transparent 34%),
+    radial-gradient(circle at 68% 98%,rgba(236,215,255,.44),transparent 35%),
+    linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3));
 }
-button,select,textarea{font:inherit;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;-webkit-tap-highlight-color:transparent}
 button{border:0;cursor:pointer;touch-action:manipulation}
 button:active{transform:scale(.985)}
 .app{
-  width:100%;min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;
-  padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(96px,calc(env(safe-area-inset-bottom) + 30px)) max(12px,env(safe-area-inset-left));
+  width:100%; min-height:100svh; display:flex; justify-content:center; align-items:flex-start;
+  padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(90px,calc(env(safe-area-inset-bottom) + 28px)) max(12px,env(safe-area-inset-left));
 }
 .card{
-  width:min(100%,430px);max-width:430px;margin:0 auto;border-radius:var(--radius);overflow:hidden;
-  background:var(--card);border:1px solid rgba(255,255,255,.82);box-shadow:var(--shadow);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  width:min(100%,430px); margin:0 auto; border-radius:var(--radius); overflow:hidden;
+  background:var(--card); border:1px solid rgba(255,255,255,.82); box-shadow:var(--shadow);
+  backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
 }
-.inner{width:100%;padding:clamp(20px,5vw,30px);overflow:hidden}
+.inner{width:100%; padding:clamp(18px,5.1vw,30px)}
 .hidden{display:none!important}
-.kicker{margin:0 0 12px;color:var(--accent-dark);font-size:12px;font-weight:950;letter-spacing:.18em;text-transform:uppercase}
-h1,h2{margin:0;line-height:1.04;letter-spacing:-.055em;font-weight:950;text-wrap:balance;overflow-wrap:normal;word-break:normal}
-h1{font-size:clamp(30px,8vw,44px)}
-h2{font-size:clamp(30px,8.6vw,42px)}
-.subtitle,.note,.counter,.status{margin:14px 0 0;color:var(--muted);font-size:15px;line-height:1.42}.note{font-size:14px}.error{color:var(--accent-dark)!important;font-weight:900}
-.buttons,.share-actions{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}
-.primary,.ghost,.choice,.activity,.share-btn{
-  min-height:52px;border-radius:999px;padding:13px 16px;font-weight:950;letter-spacing:.02em;text-align:center;line-height:1.15;
-}
-.primary,.choice,.share-btn{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-dark));box-shadow:0 12px 28px rgba(157,77,95,.22)}
-.ghost{color:var(--accent-dark);background:rgba(255,255,255,.76);border:1px solid var(--line)}
-.choice-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}.choice{min-height:76px;border-radius:22px}.choice .emoji{display:block;font-size:30px;margin-bottom:4px}.choice b{font-size:16px}
-.joy{min-height:240px;display:grid;place-items:center;text-align:center}.heart{font-size:clamp(66px,18vw,105px);animation:pulse 1.08s ease-in-out infinite}.joy-title{margin-top:10px;color:var(--accent-dark);font-size:clamp(36px,9vw,60px);font-weight:950;line-height:.98;letter-spacing:-.055em}@keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.14) rotate(4deg)}}
-.sparkle{position:fixed;top:-36px;z-index:20;pointer-events:none;animation:fall linear forwards;font-size:22px}@keyframes fall{to{transform:translateY(112dvh) rotate(360deg);opacity:0}}
-.form-panel{display:grid;gap:13px;margin-top:21px;width:100%;min-width:0;padding:14px;border:1px solid var(--line);border-radius:24px;background:rgba(255,255,255,.58);overflow:hidden}.field{display:grid;gap:8px;width:100%;min-width:0}.field-title{color:var(--muted);font-size:12px;font-weight:950;letter-spacing:.18em;text-transform:uppercase}.date-selects{display:grid;grid-template-columns:.82fr 1.12fr .94fr;gap:8px;width:100%;min-width:0}.mini{position:relative;min-width:0}.mini-label{position:absolute;left:10px;top:7px;z-index:2;color:var(--muted);font-size:8.5px;font-weight:950;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}.control,.mini-select,textarea{width:100%;min-width:0;max-width:100%;border:1px solid var(--line);background:rgba(255,255,255,.90);color:var(--text);outline:0;box-shadow:none}.control{height:52px;border-radius:18px;padding:0 13px;font-size:16px;font-weight:850;line-height:1.15}.mini-select{height:52px;border-radius:16px;padding:19px 7px 5px;text-align:center;text-align-last:center;font-size:14.5px;font-weight:900;line-height:1.1;appearance:auto;-webkit-appearance:menulist}.control:focus,.mini-select:focus,textarea:focus{border-color:rgba(201,111,130,.62);box-shadow:0 0 0 4px rgba(201,111,130,.12)}
-.activity-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}.activity{width:100%;min-height:56px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.74);color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:flex-start;text-align:left;padding:12px 18px;white-space:normal;overflow-wrap:anywhere}.activity.selected{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent-dark));border-color:transparent;box-shadow:0 12px 24px rgba(157,77,95,.18)}
-.custom{margin-top:14px}textarea{resize:vertical;min-height:92px;border-radius:18px;padding:14px;font-size:15px;line-height:1.38}.summary{display:grid;gap:10px;margin-top:20px;padding:15px;border:1px solid var(--line);border-radius:21px;background:rgba(255,255,255,.68);font-size:15px;line-height:1.42;overflow-wrap:anywhere}.summary strong{color:var(--accent-dark)}.link-box{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.78);font-size:13px;line-height:1.45;overflow-wrap:anywhere;user-select:all}.footer{margin-top:18px;color:var(--accent-dark);font-size:12px;font-weight:950;letter-spacing:.15em;text-transform:uppercase}.access{min-height:220px;display:grid;place-items:center;text-align:center}
-@media (max-width:370px){.app{padding-left:9px;padding-right:9px}.card{border-radius:23px}.inner{padding:18px 14px 22px}h1{font-size:28px}h2{font-size:28px}.date-selects{gap:6px}.mini-select{font-size:13.5px;padding-left:4px;padding-right:4px}.control{font-size:15px}.primary,.ghost,.share-btn{min-height:50px}.activity{padding-left:15px;padding-right:15px}}
-@media (min-width:560px){.card{max-width:520px}.choice-grid,.share-actions{grid-template-columns:1fr 1fr}.activity-grid{grid-template-columns:1fr 1fr}.activity{justify-content:center;text-align:center}.buttons{grid-template-columns:1fr 1fr}.buttons .primary:only-child{grid-column:1/-1}.form-panel{padding:18px}.date-selects{gap:10px}.mini-select{font-size:16px}}
-@media (min-width:900px){.app{align-items:center;padding:42px 24px}.card{max-width:600px}.inner{padding:42px}h1{font-size:52px}h2{font-size:50px}.form-panel{margin-top:25px}.control,.mini-select{height:58px}.primary,.ghost,.share-btn{min-height:56px}}
-@media (orientation:landscape) and (max-height:560px){.app{padding:12px max(18px,env(safe-area-inset-right)) 18px max(18px,env(safe-area-inset-left));align-items:flex-start}.card{max-width:min(720px,94vw);max-height:calc(100dvh - 24px);overflow:auto;-webkit-overflow-scrolling:touch}.inner{padding:18px 22px}h1{font-size:32px}h2{font-size:32px}.joy{min-height:170px}.heart{font-size:58px}.form-panel{margin-top:15px;gap:10px}.activity-grid{grid-template-columns:1fr 1fr}.activity{min-height:48px}.subtitle,.note{font-size:13px}.buttons{margin-top:14px}}
+.kicker{margin:0 0 12px; color:var(--accent2); font-size:clamp(11px,2.7vw,13px); font-weight:950; letter-spacing:.18em; text-transform:uppercase}
+h1,h2{margin:0; font-weight:950; letter-spacing:-.045em; line-height:1.04; overflow-wrap:break-word; text-wrap:balance}
+h1{font-size:clamp(29px,8.3vw,42px)}
+h2{font-size:clamp(30px,8.5vw,43px)}
+.subtitle,.note,.status,.counter{margin:14px 0 0; color:var(--muted); font-size:clamp(14px,3.7vw,17px); line-height:1.45}.note,.status,.counter{font-size:14px}.error{color:var(--accent2);font-weight:900}
+.choicegrid{display:grid;grid-template-columns:1fr;gap:11px;margin-top:22px}.choice{min-height:84px;border-radius:22px;padding:16px;color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 13px 26px rgba(168,77,97,.20);font-weight:950}.choice .emoji{display:block;font-size:30px;margin-bottom:4px}.choice b{font-size:16px;letter-spacing:.03em}
+.joy{min-height:210px;display:grid;place-items:center;text-align:center}.heart{font-size:clamp(58px,16vw,94px);animation:pulse 1.08s ease-in-out infinite}.joytitle{margin-top:10px;color:var(--accent2);font-size:clamp(32px,8.8vw,54px);font-weight:950;line-height:1;letter-spacing:-.05em}@keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.13) rotate(4deg)}}
+.stack{display:grid;gap:14px;margin-top:22px}.compact-panel{display:grid;gap:12px;padding:14px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.55);width:100%;min-width:0;overflow:hidden}.field{display:grid;gap:8px;width:100%;min-width:0}.field span{color:var(--muted);font-size:12px;font-weight:950;letter-spacing:.17em;text-transform:uppercase}.date-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.28fr);gap:8px;width:100%;min-width:0}.small-field{position:relative;min-width:0}.small-field label{position:absolute;left:11px;top:7px;font-size:9px;font-weight:950;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;pointer-events:none}.control,.mini-control,textarea{width:100%;min-width:0;max-width:100%;border:1px solid var(--line);background:rgba(255,255,255,.86);color:var(--text);outline:0;box-shadow:none}.control{height:52px;border-radius:18px;padding:0 14px;font-size:16px;font-weight:850;line-height:1.15}.mini-control{height:54px;border-radius:16px;padding:20px 8px 6px;text-align:center;font-size:16px;font-weight:900;line-height:1.1;appearance:none;-webkit-appearance:none}.mini-control::placeholder{color:#b39aa0;opacity:1}.control:focus,.mini-control:focus,textarea:focus{border-color:rgba(201,109,128,.62);box-shadow:0 0 0 4px rgba(201,109,128,.12)}
+.buttons{display:grid;grid-template-columns:1fr;gap:11px;margin-top:22px}.primary,.ghost,.activity,.sharebtn{width:100%;min-width:0;min-height:52px;padding:14px 16px;border-radius:999px;font-weight:950;letter-spacing:.025em;text-align:center}.primary,.sharebtn{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 13px 28px rgba(168,77,97,.22)}.ghost{color:var(--accent2);background:rgba(255,255,255,.76);border:1px solid var(--line)}
+.activities{display:grid;grid-template-columns:1fr;gap:10px;margin-top:22px}.activity{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.76);color:var(--text);font-size:14px;line-height:1.22;text-align:left;white-space:normal;overflow-wrap:anywhere}.activity.selected{color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;box-shadow:0 12px 24px rgba(168,77,97,.18)}
+textarea{min-height:92px;padding:13px;border-radius:18px;resize:vertical;font-weight:650;line-height:1.4;appearance:none;-webkit-appearance:none}.summary,.linkbox{display:grid;gap:9px;margin-top:18px;padding:15px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.66);line-height:1.43;overflow-wrap:anywhere}.summary strong{color:var(--accent2)}.linkbox{display:block;font-size:13px;user-select:all}.sharegrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:13px}.sharebtn{border-radius:17px}.footer{margin-top:20px;color:var(--accent2);font-size:12px;font-weight:950;letter-spacing:.14em;text-transform:uppercase}.sparkle{position:fixed;top:-36px;z-index:20;pointer-events:none;animation:fall linear forwards;font-size:22px}@keyframes fall{to{transform:translateY(112svh) rotate(360deg);opacity:0}}
+@media (max-width:370px){.app{padding-left:9px;padding-right:9px}.card{width:min(100%,400px);border-radius:22px}.inner{padding:17px 14px}h1{font-size:27px}h2{font-size:28px}.date-grid{gap:6px}.mini-control{font-size:15px;padding-left:5px;padding-right:5px}.control{height:50px}.primary,.ghost,.activity,.sharebtn{min-height:50px}}
+@media (min-width:520px){.card{width:min(100%,520px)}.choicegrid{grid-template-columns:1fr 1fr}.sharegrid{grid-template-columns:1fr 1fr}.activities{grid-template-columns:1fr 1fr}.activity{text-align:center}.buttons.two{grid-template-columns:1fr 1fr}}
+@media (min-width:760px){.app{align-items:center;padding:38px 24px}.card{width:min(100%,560px)}.inner{padding:38px}h1{font-size:48px}h2{font-size:46px}.compact-panel{padding:16px}.control{height:56px}.mini-control{height:56px}.stack{gap:16px}.joy{min-height:250px}}
+@media (min-width:1100px){.card{width:min(100%,600px)}.inner{padding:44px}h1{font-size:52px}h2{font-size:50px}}
+@media (orientation:landscape) and (max-height:540px){.app{align-items:flex-start;padding:10px max(16px,env(safe-area-inset-right)) 22px max(16px,env(safe-area-inset-left))}.card{width:min(100%,720px)}.inner{padding:20px 24px;max-height:calc(100svh - 24px);overflow:auto}h1{font-size:clamp(28px,5.4vw,40px)}h2{font-size:clamp(28px,5.2vw,39px)}.joy{min-height:160px}.stack{gap:10px;margin-top:16px}.compact-panel{padding:12px;gap:10px}.control,.mini-control{height:48px}.mini-control{padding-top:18px}.primary,.ghost,.activity,.sharebtn{min-height:46px;padding:11px 14px}.activities{grid-template-columns:1fr 1fr}.subtitle,.note{font-size:14px}}
 @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
-<main class="app"><section class="card">
-  <div class="inner hidden" id="denied"><div class="access"><div><p class="kicker">секретная ссылка</p><h2>Тут пока ничего нет 💌</h2><p class="subtitle">Эта страница открывается только по личной ссылке-приглашению.</p></div></div></div>
-  <div class="inner" id="maker">
-    <section id="stepWho"><p class="kicker">мини‑приглашение</p><h1>ДЛЯ КОГО<br>БУДЕМ ДЕЛАТЬ<br>ПРИГЛАШЕНИЕ?</h1><p class="subtitle">Выбери, кому полетит романтичная ссылка со свиданием.</p><div class="choice-grid"><button class="choice" type="button" data-target="wife"><span class="emoji">💗</span><b>ДЛЯ ЖЕНЫ</b></button><button class="choice" type="button" data-target="husband"><span class="emoji">❤️</span><b>ДЛЯ МУЖА</b></button></div></section>
-    <section id="stepJoy" class="hidden"><div class="joy"><div><div class="heart" id="joyIcon">❤️</div><div class="joy-title">УРАААААА!</div><p class="subtitle" id="joyText">Кто-то уже очень рад.</p></div></div></section>
-    <section id="stepCalendar" class="hidden"><p class="kicker">шаг 1 из 2</p><h2>И ТАК...<br>КОГДА ЖЕ<br>ЭТО БУДЕТ?</h2><div class="form-panel"><div class="field"><div class="field-title">Дата</div><div class="date-selects"><div class="mini"><div class="mini-label">число</div><select class="mini-select" id="day"></select></div><div class="mini"><div class="mini-label">месяц</div><select class="mini-select" id="month"></select></div><div class="mini"><div class="mini-label">год</div><select class="mini-select" id="year"></select></div></div></div><label class="field"><span class="field-title">Время</span><select class="control" id="time"></select></label></div><div class="buttons"><button class="primary" id="dateNext" type="button">❤️ ВЫБРАТЬ ❤️</button></div><p class="note" id="dateNote">Выбери дату и время, чтобы перейти к плану свидания.</p></section>
-    <section id="stepPlan" class="hidden"><p class="kicker">шаг 2 из 2</p><h2>ЧТО ЖЕ МЫ<br>БУДЕМ ДЕЛАТЬ?</h2><div class="activity-grid" id="grid"></div><div class="custom hidden" id="customBox"><label class="field"><span class="field-title">Твоё предложение</span><textarea id="custom" maxlength="150" rows="3" placeholder="Например: поехать смотреть закат..."></textarea></label><div class="counter" id="count">Осталось 150 символов</div></div><div class="buttons"><button class="primary" id="planNext" type="button">ПРОДОЛЖИТЬ</button></div><p class="note" id="planNote">Можно выбрать несколько вариантов.</p></section>
-    <section id="stepConfirm" class="hidden"><p class="kicker">почти готово</p><h2 id="confirmTitle">СФОРМИРОВАТЬ ССЫЛКУ?</h2><div class="summary" id="summary"></div><div class="buttons"><button class="primary" id="makeLink" type="button">СФОРМИРОВАТЬ ССЫЛКУ 💌</button><button class="ghost" id="back" type="button">ИЗМЕНИТЬ</button></div></section>
-    <section id="stepShare" class="hidden"><p class="kicker">готово</p><h2 id="shareTitle">ССЫЛКА ГОТОВА 💌</h2><p class="subtitle" id="shareSub">Отправь эту ссылку любимому человеку.</p><div class="summary" id="shareSummary"></div><div class="link-box" id="shareLink" tabindex="0"></div><div class="share-actions"><button class="share-btn" id="copy" type="button">СКОПИРОВАТЬ ССЫЛКУ</button><button class="share-btn" id="share" type="button">ПОДЕЛИТЬСЯ</button></div><p class="status" id="status"></p><div class="footer">романтика официально запланирована</div></section>
-  </div>
-  <div class="inner hidden" id="details"><p class="kicker">приглашение на свидание</p><h2 id="detailsTitle">ВАС ПРИГЛАШАЮТ НА СВИДАНИЕ ❤️</h2><p class="subtitle" id="detailsSub">Вот все подробности.</p><div class="summary" id="detailsSummary"></div><div class="footer">свидание ждёт вас</div></div>
-</section></main>
+<main class="app"><article class="card">
+  <section class="inner hidden" id="denied"><p class="kicker">секретная ссылка</p><h2>Тут пока ничего нет 💌</h2><p class="subtitle">Эта страница открывается только по личной ссылке-приглашению.</p></section>
+
+  <section class="inner" id="maker">
+    <div id="stepWho"><p class="kicker">мини‑приглашение</p><h1>ДЛЯ КОГО<br>БУДЕМ ДЕЛАТЬ<br>ПРИГЛАШЕНИЕ?</h1><p class="subtitle">Выбери, кому полетит романтичная ссылка со свиданием.</p><div class="choicegrid"><button class="choice" type="button" data-target="wife"><span class="emoji">💗</span><b>ДЛЯ ЖЕНЫ</b></button><button class="choice" type="button" data-target="husband"><span class="emoji">❤️</span><b>ДЛЯ МУЖА</b></button></div></div>
+    <div id="stepJoy" class="hidden"><div class="joy"><div><div class="heart" id="joyIcon">❤️</div><div class="joytitle">УРАААААА!</div><p class="subtitle" id="joyText">Кто-то уже очень рад.</p></div></div></div>
+    <div id="stepCalendar" class="hidden"><p class="kicker">шаг 1 из 2</p><h2>И ТАК...<br>КОГДА ЖЕ<br>ЭТО БУДЕТ?</h2><div class="stack"><div class="compact-panel"><label class="field"><span>Дата</span><div class="date-grid"><div class="small-field"><label for="day">день</label><input class="mini-control" id="day" inputmode="numeric" maxlength="2" placeholder="18" autocomplete="off"></div><div class="small-field"><label for="month">месяц</label><input class="mini-control" id="month" inputmode="numeric" maxlength="2" placeholder="06" autocomplete="off"></div><div class="small-field"><label for="year">год</label><input class="mini-control" id="year" inputmode="numeric" maxlength="4" placeholder="2026" autocomplete="off"></div></div></label><label class="field"><span>Время</span><select class="control" id="time"></select></label></div></div><div class="buttons"><button class="primary" id="dateNext" type="button">❤️ ВЫБРАТЬ ❤️</button></div><p class="note" id="dateNote">Выбери дату и время, чтобы перейти к плану свидания.</p></div>
+    <div id="stepPlan" class="hidden"><p class="kicker">шаг 2 из 2</p><h2>ЧТО ЖЕ МЫ<br>БУДЕМ ДЕЛАТЬ?</h2><div class="activities" id="activities"></div><div class="stack hidden" id="customBox"><label class="field"><span>Твоё предложение</span><textarea id="custom" maxlength="150" placeholder="Например: поехать смотреть закат..."></textarea></label><div class="counter" id="count">Осталось 150 символов</div></div><div class="buttons"><button class="primary" id="planNext" type="button">ПРОДОЛЖИТЬ</button></div><p class="note" id="planNote">Можно выбрать несколько вариантов.</p></div>
+    <div id="stepConfirm" class="hidden"><p class="kicker">почти готово</p><h2 id="confirmTitle">СФОРМИРОВАТЬ ССЫЛКУ?</h2><div class="summary" id="summary"></div><div class="buttons two"><button class="primary" id="makeLink" type="button">СФОРМИРОВАТЬ 💌</button><button class="ghost" id="back" type="button">ИЗМЕНИТЬ</button></div></div>
+    <div id="stepShare" class="hidden"><p class="kicker">готово</p><h2 id="shareTitle">ССЫЛКА ГОТОВА 💌</h2><p class="subtitle" id="shareSub">Отправь эту ссылку любимому человеку.</p><div class="summary" id="shareSummary"></div><div class="linkbox" id="shareLink"></div><div class="sharegrid"><button class="sharebtn" id="copyBtn" type="button">СКОПИРОВАТЬ</button><button class="sharebtn" id="shareBtn" type="button">ПОДЕЛИТЬСЯ</button></div><p class="status" id="status"></p><div class="footer">романтика официально запланирована</div></div>
+  </section>
+
+  <section class="inner hidden" id="details"><p class="kicker">приглашение на свидание</p><h2 id="detailsTitle">ВАС ПРИГЛАШАЮТ НА СВИДАНИЕ ❤️</h2><p class="subtitle" id="detailsSub">Вот все подробности.</p><div class="summary" id="detailsSummary"></div><div class="footer">свидание ждёт вас</div></section>
+</article></main>
 <script>
-const SECRET="DARYA_DATE_2026",params=new URLSearchParams(location.search),hasAccess=params.get("secret")===SECRET||location.protocol==="file:",isDetails=params.get("view")==="details";
-const steps=["stepWho","stepJoy","stepCalendar","stepPlan","stepConfirm","stepShare"],state={target:"",date:"",time:"",acts:new Set(),custom:"",url:""};
-const texts={husband:{icon:"❤️",joy:"Муж уже рад. Очень. Даже если делает вид, что он серьёзный.",confirm:"СФОРМИРОВАТЬ ССЫЛКУ ДЛЯ МУЖА?",shareTitle:"ССЫЛКА ДЛЯ МУЖА ГОТОВА 💌",shareSub:"Отправь ему эту ссылку — он откроет карточку с приглашением от любимой жены.",title:"ЛЮБИМАЯ ЖЕНА ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️",sub:"Вот что она приготовила для вашего свидания."},wife:{icon:"💗",joy:"Жена уже радуется и мысленно выбирает красивое настроение.",confirm:"СФОРМИРОВАТЬ ССЫЛКУ ДЛЯ ЖЕНЫ?",shareTitle:"ССЫЛКА ДЛЯ ЖЕНЫ ГОТОВА 💌",shareSub:"Отправь ей эту ссылку — она откроет карточку с приглашением от любимого мужа.",title:"ЛЮБИМЫЙ МУЖ ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️",sub:"Вот что он приготовил для вашего свидания."}};
-const activities=["ВКУСНО КУШАТЬ 🍔","ГУЛЯТЬ НОЖКАМИ 🐾","КУРИТЬ КАЛЬЯН 🫯","ИГРАТЬ В ПРИСТАВКУ 🕹️","ПО БАРАМ 🍹","ПОЙДЕМ В КИНО 🎥","СЮРПРИЗ ✨","ПРЕДЛОЖИ СВОЕ 😏"];
-const monthNames=["Янв","Фев","Мар","Апр","Май","Июн","Июл","Авг","Сен","Окт","Ноя","Дек"];
-const $=id=>document.getElementById(id),esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-function show(id){steps.forEach(s=>$(s).classList.toggle("hidden",s!==id));requestAnimationFrame(()=>scrollTo({top:0,left:0,behavior:"smooth"}))}
-function daysInMonth(y,m){return new Date(Number(y),Number(m),0).getDate()}
-function normalizeDate(){let d=Number($("day").value),m=Number($("month").value),y=Number($("year").value);if(!d||!m||!y)return false;let max=daysInMonth(y,m);if(d>max){$("day").value=String(max);$("dateNote").textContent=`В этом месяце только ${max} дней, поэтому поставила ${max}-е число.`;d=max}else if(!$("dateNote").classList.contains("error")){$("dateNote").textContent="Выбери дату и время, чтобы перейти к плану свидания."}return true}
-function selectedDate(){normalizeDate();let d=$("day").value.padStart(2,"0"),m=$("month").value.padStart(2,"0"),y=$("year").value;return `${y}-${m}-${d}`}
-function formatDate(v){if(!v)return"—";let [y,m,d]=v.split("-");return `${d}.${m}.${y}`}
-function picked(){let a=[...state.acts];if(state.custom.trim())a.push("СВОЙ ВАРИАНТ: "+state.custom.trim());return a}
-function summaryHtml(date=state.date,time=state.time,a=picked()){return `<div><strong>Дата:</strong> ${esc(formatDate(date))}</div><div><strong>Время:</strong> ${esc(time||"—")}</div><div><strong>Что будем делать:</strong><br>${a.length?a.map(esc).join("<br>"):"—"}</div>`}
-function makeUrl(){let q=new URLSearchParams({secret:SECRET,view:"details",target:state.target,date:state.date,time:state.time,activities:picked().join(" | ")});return `${location.origin}${location.pathname}?${q.toString()}`}
-function confetti(){for(let i=0,s=["❤️","💕","✨","💌","🌙","💫"];i<30;i++){let e=document.createElement("div");e.className="sparkle";e.textContent=s[Math.random()*s.length|0];e.style.left=Math.random()*100+"vw";e.style.animationDuration=1500+Math.random()*1600+"ms";e.style.animationDelay=Math.random()*320+"ms";document.body.append(e);setTimeout(()=>e.remove(),3600)}}
-function addOption(select,value,text,disabled=false){let o=document.createElement("option");o.value=value;o.textContent=text;o.disabled=disabled;if(disabled)o.selected=true;select.append(o)}
-function initDateTime(){let day=$("day"),month=$("month"),year=$("year"),time=$("time");addOption(day,"","число",true);for(let i=1;i<=31;i++)addOption(day,String(i),String(i));addOption(month,"","месяц",true);for(let i=1;i<=12;i++)addOption(month,String(i),monthNames[i-1]);addOption(year,"","год",true);for(let y=2026;y<=2036;y++)addOption(year,String(y),String(y));addOption(time,"","Выбери время",true);for(let h=0;h<24;h++){for(let m=0;m<60;m+=15){let v=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;addOption(time,v,v)}}[day,month,year].forEach(el=>el.addEventListener("change",()=>{$("dateNote").classList.remove("error");normalizeDate()}))}
-function initActivities(){activities.forEach(name=>{let b=document.createElement("button");b.type="button";b.className="activity";b.textContent=name;b.onclick=()=>{state.acts.has(name)?state.acts.delete(name):state.acts.add(name);b.classList.toggle("selected",state.acts.has(name));$("customBox").classList.toggle("hidden",!state.acts.has("ПРЕДЛОЖИ СВОЕ 😏"))};$("grid").append(b)})}
-initDateTime();initActivities();
-document.querySelectorAll("[data-target]").forEach(b=>b.onclick=()=>{state.target=b.dataset.target;let c=texts[state.target];$("joyIcon").textContent=c.icon;$("joyText").textContent=c.joy;$("confirmTitle").textContent=c.confirm;show("stepJoy");confetti();setTimeout(()=>show("stepCalendar"),1500)});
-$("dateNext").onclick=()=>{let n=$("dateNote");n.classList.remove("error");if(!normalizeDate()||!$("time").value){n.textContent="Нужно выбрать дату и время — романтика любит конкретику.";n.classList.add("error");return}state.date=selectedDate();state.time=$("time").value;show("stepPlan")};
+const SECRET="DARYA_DATE_2026";
+const params=new URLSearchParams(location.search);
+const allowed=params.get("secret")===SECRET||location.protocol==="file:";
+const isDetails=params.get("view")==="details";
+const $=id=>document.getElementById(id);
+const steps=["stepWho","stepJoy","stepCalendar","stepPlan","stepConfirm","stepShare"];
+const state={target:"",day:"",month:"",year:"",time:"",selected:new Set(),custom:"",url:""};
+const text={
+  husband:{icon:"❤️",joy:"Муж уже рад. Даже если делает вид, что он серьёзный.",confirm:"СФОРМИРОВАТЬ ССЫЛКУ ДЛЯ МУЖА?",shareTitle:"ССЫЛКА ДЛЯ МУЖА ГОТОВА 💌",shareSub:"Отправь ему эту ссылку — он откроет карточку с приглашением от любимой жены.",title:"ЛЮБИМАЯ ЖЕНА ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️",sub:"Вот что она приготовила для вашего свидания."},
+  wife:{icon:"💗",joy:"Жена уже радуется и мысленно выбирает красивое настроение.",confirm:"СФОРМИРОВАТЬ ССЫЛКУ ДЛЯ ЖЕНЫ?",shareTitle:"ССЫЛКА ДЛЯ ЖЕНЫ ГОТОВА 💌",shareSub:"Отправь ей эту ссылку — она откроет карточку с приглашением от любимого мужа.",title:"ЛЮБИМЫЙ МУЖ ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️",sub:"Вот что он приготовил для вашего свидания."}
+};
+const activityList=["ВКУСНО КУШАТЬ 🍔","ГУЛЯТЬ НОЖКАМИ 🐾","КУРИТЬ КАЛЬЯН 🫯","ИГРАТЬ В ПРИСТАВКУ 🕹️","ПО БАРАМ 🍹","ПОЙДЕМ В КИНО 🎥","СЮРПРИЗ ✨","ПРЕДЛОЖИ СВОЕ 😏"];
+function esc(v){return String(v).replace(/[&<>\"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function show(id){steps.forEach(s=>$(s).classList.toggle("hidden",s!==id));requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:"smooth"}))}
+function digits(el,max){el.value=el.value.replace(/\D/g,"").slice(0,max)}
+[ ["day",2], ["month",2], ["year",4] ].forEach(([id,max])=>{$(id).addEventListener("input",()=>digits($(id),max))});
+function normalizedDate(){
+  let d=$("day").value.padStart(2,"0"), m=$("month").value.padStart(2,"0"), y=$("year").value;
+  if(!d||!m||!y) return "";
+  return `${d}.${m}.${y}`;
+}
+function dateIsValid(){
+  let d=Number($("day").value), m=Number($("month").value), y=Number($("year").value);
+  if(!d||!m||!y||y<2026||m<1||m>12||d<1||d>31) return false;
+  let dt=new Date(y,m-1,d);
+  return dt.getFullYear()===y && dt.getMonth()===m-1 && dt.getDate()===d;
+}
+function picked(){let arr=[...state.selected];if(state.custom.trim())arr.push("СВОЙ ВАРИАНТ: "+state.custom.trim());return arr}
+function summaryHtml(date=state.date,time=state.time,arr=picked()){return `<div><strong>Дата:</strong> ${esc(date||"—")}</div><div><strong>Время:</strong> ${esc(time||"—")}</div><div><strong>Что будем делать:</strong><br>${arr.length?arr.map(esc).join("<br>"):"—"}</div>`}
+function makeDetailsUrl(){let q=new URLSearchParams({secret:SECRET,view:"details",target:state.target,date:state.date,time:state.time,activities:picked().join(" | ")});return `${location.origin}${location.pathname}?${q.toString()}`}
+function confetti(){for(let i=0;i<28;i++){let e=document.createElement("div");e.className="sparkle";e.textContent=["❤️","💕","✨","💌","🌙","💫"][Math.floor(Math.random()*6)];e.style.left=Math.random()*100+"vw";e.style.animationDuration=1500+Math.random()*1600+"ms";e.style.animationDelay=Math.random()*300+"ms";document.body.append(e);setTimeout(()=>e.remove(),3500)}}
+function fillTime(){let s=$("time");s.innerHTML="";let p=document.createElement("option");p.textContent="Выбери время";p.value="";p.disabled=true;p.selected=true;s.append(p);for(let h=0;h<24;h++)for(let m=0;m<60;m+=15){let v=`${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}`;let o=document.createElement("option");o.value=v;o.textContent=v;s.append(o)}}
+function initActivities(){activityList.forEach(name=>{let b=document.createElement("button");b.type="button";b.className="activity";b.textContent=name;b.onclick=()=>{state.selected.has(name)?state.selected.delete(name):state.selected.add(name);b.classList.toggle("selected",state.selected.has(name));$("customBox").classList.toggle("hidden",!state.selected.has("ПРЕДЛОЖИ СВОЕ 😏"))};$("activities").append(b)})}
+fillTime();initActivities();
+document.querySelectorAll("[data-target]").forEach(b=>b.onclick=()=>{state.target=b.dataset.target;let c=text[state.target];$("joyIcon").textContent=c.icon;$("joyText").textContent=c.joy;$("confirmTitle").textContent=c.confirm;show("stepJoy");confetti();setTimeout(()=>show("stepCalendar"),1500)});
+$("dateNext").onclick=()=>{let note=$("dateNote");note.classList.remove("error");state.date=normalizedDate();state.time=$("time").value;if(!dateIsValid()||!state.time){note.textContent="Нужно выбрать корректную дату и время — романтика любит конкретику.";note.classList.add("error");return}note.textContent="Выбери дату и время, чтобы перейти к плану свидания.";show("stepPlan")};
 $("custom").oninput=()=>{state.custom=$("custom").value;$("count").textContent=`Осталось ${150-state.custom.length} символов`};
-$("planNext").onclick=()=>{let n=$("planNote");n.classList.remove("error");if(!state.acts.size){n.textContent="Выбери хотя бы один вариант, чтобы было что предвкушать.";n.classList.add("error");return}if(state.acts.has("ПРЕДЛОЖИ СВОЕ 😏")&&!state.custom.trim()){n.textContent="Напиши своё предложение или убери этот вариант.";n.classList.add("error");$("custom").focus();return}$("summary").innerHTML=summaryHtml();show("stepConfirm")};
+$("planNext").onclick=()=>{let note=$("planNote");note.classList.remove("error");if(!state.selected.size){note.textContent="Выбери хотя бы один вариант, чтобы было что предвкушать.";note.classList.add("error");return}if(state.selected.has("ПРЕДЛОЖИ СВОЕ 😏")&&!state.custom.trim()){note.textContent="Напиши своё предложение или убери этот вариант.";note.classList.add("error");$("custom").focus();return}$("summary").innerHTML=summaryHtml();show("stepConfirm")};
 $("back").onclick=()=>show("stepPlan");
-$("makeLink").onclick=()=>{let c=texts[state.target]||texts.husband;state.url=makeUrl();$("shareTitle").textContent=c.shareTitle;$("shareSub").textContent=c.shareSub;$("shareSummary").innerHTML=summaryHtml();$("shareLink").textContent=state.url;$("status").textContent="";show("stepShare");confetti()};
-async function copyUrl(){try{await navigator.clipboard.writeText(state.url);$("status").textContent="Ссылка скопирована. Теперь её можно отправить."}catch(e){$("status").textContent="Не удалось скопировать автоматически. Зажми ссылку выше и скопируй вручную."}}
-$("copy").onclick=copyUrl;$("share").onclick=async()=>{let c=texts[state.target]||texts.husband;if(navigator.share){try{await navigator.share({title:"Приглашение на свидание ❤️",text:c.title,url:state.url});$("status").textContent="Ссылка готова к отправке."}catch(e){$("status").textContent="Отправку отменили. Ссылку можно скопировать кнопкой рядом."}}else copyUrl()};
-function renderDetails(){document.getElementById("maker").classList.add("hidden");$("details").classList.remove("hidden");let t=params.get("target")==="wife"?"wife":"husband",c=texts[t],a=(params.get("activities")||"").split(" | ").filter(Boolean);$("detailsTitle").textContent=c.title;$("detailsSub").textContent=c.sub;$("detailsSummary").innerHTML=summaryHtml(params.get("date")||"",params.get("time")||"",a);confetti()}
-if(!hasAccess){$("maker").classList.add("hidden");$("details").classList.add("hidden");$("denied").classList.remove("hidden")}else if(isDetails){renderDetails()}
+$("makeLink").onclick=()=>{let c=text[state.target]||text.husband;state.url=makeDetailsUrl();$("shareTitle").textContent=c.shareTitle;$("shareSub").textContent=c.shareSub;$("shareSummary").innerHTML=summaryHtml();$("shareLink").textContent=state.url;$("status").textContent="";show("stepShare");confetti()};
+async function copyUrl(){try{await navigator.clipboard.writeText(state.url);$("status").textContent="Ссылка скопирована."}catch(e){$("status").textContent="Зажми ссылку выше и скопируй вручную."}}
+$("copyBtn").onclick=copyUrl;$("shareBtn").onclick=async()=>{let c=text[state.target]||text.husband;if(navigator.share){try{await navigator.share({title:"Приглашение на свидание ❤️",text:c.title,url:state.url})}catch(e){$("status").textContent="Отправку отменили. Ссылку можно скопировать кнопкой рядом."}}else copyUrl()};
+function renderDetails(){document.getElementById("maker").classList.add("hidden");$("details").classList.remove("hidden");let target=params.get("target")==="wife"?"wife":"husband",c=text[target],arr=(params.get("activities")||"").split(" | ").filter(Boolean);$("detailsTitle").textContent=c.title;$("detailsSub").textContent=c.sub;$("detailsSummary").innerHTML=summaryHtml(params.get("date")||"—",params.get("time")||"—",arr);confetti()}
+if(!allowed){$("maker").classList.add("hidden");$("denied").classList.remove("hidden")}else if(isDetails){renderDetails()}
 </script>
 </body>
 </html>
