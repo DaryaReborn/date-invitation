@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Свидание ❤️</title>
+<!-- version: dating-site-v9-final-clean-real -->
+<style>
+:root{
+  --bg1:#fff7f7;
+  --bg2:#f8eded;
+  --bg3:#fff4df;
+  --text:#332323;
+  --muted:#8a656b;
+  --accent:#c86d7e;
+  --accent-dark:#9e4f5e;
+  --line:rgba(107,63,72,.16);
+  --white:rgba(255,255,255,.88);
+  --shadow:0 26px 70px rgba(86,45,55,.16);
+  --radius:28px;
+  --font:ui-rounded,"SF Pro Rounded","Nunito",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;min-width:0}
+html{width:100%;min-height:100%;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0;
+  width:100%;
+  min-height:100svh;
+  overflow-x:hidden;
+  font-family:var(--font);
+  color:var(--text);
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255,205,213,.55), transparent 33%),
+    radial-gradient(circle at 88% 14%, rgba(255,236,196,.72), transparent 36%),
+    radial-gradient(circle at 55% 90%, rgba(245,214,255,.42), transparent 38%),
+    linear-gradient(135deg,var(--bg1),var(--bg2) 52%,var(--bg3));
+}
+button,input,select,textarea{font:inherit}
+button{border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.page{
+  width:100%;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:calc(14px + env(safe-area-inset-top)) clamp(12px,4vw,32px) calc(20px + env(safe-area-inset-bottom));
+}
+.card{
+  width:100%;
+  max-width:680px;
+  margin:0 auto;
+  background:var(--white);
+  border:1px solid rgba(255,255,255,.74);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  padding:clamp(22px,5vw,44px);
+  overflow:hidden;
+}
+.kicker{
+  margin:0 0 12px;
+  font-size:clamp(13px,2.8vw,16px);
+  line-height:1.15;
+  color:var(--muted);
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.title{
+  margin:0;
+  font-size:clamp(30px,8vw,58px);
+  line-height:.98;
+  letter-spacing:-.045em;
+  font-weight:1000;
+  text-wrap:balance;
+}
+.subtitle{
+  margin:16px 0 0;
+  color:var(--muted);
+  font-size:clamp(16px,3.8vw,21px);
+  line-height:1.42;
+}
+.stack{display:grid;gap:16px;margin-top:26px}
+.grid2{display:grid;grid-template-columns:1fr;gap:14px}
+.primary,.choice,.secondary,.ghost,.danger-no{
+  width:100%;
+  min-height:56px;
+  border-radius:999px;
+  padding:15px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-weight:1000;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-size:clamp(16px,4.2vw,22px);
+  line-height:1.12;
+  text-align:center;
+  transition:transform .16s ease, box-shadow .16s ease, background .16s ease;
+}
+.primary{
+  color:#fff;
+  background:linear-gradient(135deg,#d9788b,#a84f60);
+  box-shadow:0 18px 36px rgba(169,74,92,.26);
+}
+.secondary,.choice,.danger-no{
+  color:var(--text);
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--line);
+}
+.ghost{color:var(--accent-dark);background:rgba(255,255,255,.38);border:1px solid var(--line)}
+.primary:active,.choice:active,.secondary:active,.ghost:active,.danger-no:active{transform:scale(.98)}
+.choice.active,.secondary.active{color:#fff;background:linear-gradient(135deg,#d9788b,#a84f60);border-color:transparent}
+.danger-no.angry{background:#fff1f1;color:#7a2730}
+.form-block{display:grid;gap:12px;margin-top:24px}
+.label{
+  display:block;
+  color:var(--muted);
+  font-size:clamp(14px,3.6vw,18px);
+  font-weight:1000;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.field,input[type="date"],select,textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.68);
+  border-radius:24px;
+  min-height:58px;
+  padding:15px 18px;
+  color:var(--text);
+  font-size:16px;
+  font-weight:850;
+  outline:none;
+  box-shadow:none;
+  appearance:auto;
+  -webkit-appearance:auto;
+}
+textarea{min-height:110px;resize:vertical;line-height:1.35;border-radius:24px}
+.help{margin:10px 0 0;color:var(--muted);font-size:clamp(14px,3.6vw,17px);line-height:1.45}
+.counter{text-align:right;color:var(--muted);font-size:14px;margin-top:6px}
+.activity-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px}
+.activity{
+  width:100%;
+  border-radius:22px;
+  min-height:58px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.66);
+  border:1px solid var(--line);
+  color:var(--text);
+  text-align:left;
+  font-size:clamp(15px,3.7vw,18px);
+  font-weight:1000;
+  letter-spacing:.035em;
+  text-transform:uppercase;
+  line-height:1.25;
+  word-break:normal;
+}
+.activity.active{background:linear-gradient(135deg,#d9788b,#a84f60);color:#fff;border-color:transparent;box-shadow:0 12px 28px rgba(169,74,92,.18)}
+.summary{
+  margin-top:22px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-radius:24px;
+  background:rgba(255,255,255,.5);
+  display:grid;
+  gap:12px;
+}
+.summary-row{display:grid;gap:4px}
+.summary-row b{font-size:13px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.summary-row span{font-size:clamp(17px,4vw,22px);font-weight:900;line-height:1.28}
+.linkbox{
+  width:100%;
+  margin-top:18px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.68);
+  border-radius:22px;
+  padding:14px;
+  color:var(--muted);
+  font-size:14px;
+  line-height:1.35;
+  word-break:break-all;
+}
+.emoji-big{font-size:clamp(54px,18vw,96px);line-height:1;margin:14px 0 6px;text-align:center;animation:pop .8s ease infinite alternate}
+@keyframes pop{from{transform:translateY(0) scale(1)}to{transform:translateY(-7px) scale(1.06)}}
+.footer-actions{display:grid;gap:12px;margin-top:20px}
+.lock{max-width:560px;text-align:center}
+.hidden{display:none!important}
+@media (min-width:700px){
+  .grid2{grid-template-columns:1fr 1fr}
+  .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer-actions{grid-template-columns:1fr 1fr}
+  .footer-actions .primary:only-child{grid-column:1/-1}
+}
+@media (min-width:1024px){
+  .card{max-width:760px;padding:48px;border-radius:34px}
+  .title{font-size:58px}
+  .page{padding:40px}
+}
+@media (max-width:420px){
+  .page{align-items:flex-start;padding-top:calc(18px + env(safe-area-inset-top));padding-left:10px;padding-right:10px}
+  .card{border-radius:24px;padding:22px 18px;max-width:100%}
+  .title{font-size:clamp(28px,11.2vw,42px);line-height:1.02}
+  .primary,.choice,.secondary,.ghost,.danger-no{min-height:54px;font-size:16px;padding:13px 15px}
+  .field,input[type="date"],select,textarea{min-height:56px;border-radius:22px}
+}
+@media (orientation:landscape) and (max-height:560px){
+  .page{align-items:flex-start;justify-content:center;padding:10px 18px calc(10px + env(safe-area-inset-bottom))}
+  .card{max-width:min(760px,96vw);max-height:calc(100svh - 20px);overflow:auto;padding:18px 22px;border-radius:22px}
+  .title{font-size:clamp(26px,5.8vw,42px);line-height:1.02}
+  .subtitle{font-size:15px;margin-top:10px}
+  .stack,.form-block{margin-top:16px;gap:10px}
+  .activity-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .activity{min-height:48px;font-size:14px;padding:10px 12px;border-radius:18px}
+  .primary,.choice,.secondary,.ghost,.danger-no{min-height:48px;font-size:15px;padding:10px 14px}
+  .field,input[type="date"],select,textarea{min-height:50px;border-radius:18px;padding:11px 14px}
+  textarea{min-height:80px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <section id="app" class="card"></section>
+</main>
+<script>
+/* version: dating-site-v9-final-clean-real */
+const SECRET = 'DARYA_DATE_2026';
+const app = document.getElementById('app');
+const state = { target:null, date:'', time:'', activities:[], custom:'' };
+const activities = [
+  'ВКУСНО КУШАТЬ 🍔',
+  'ГУЛЯТЬ НОЖКАМИ 🐾',
+  'КУРИТЬ КАЛЬЯН 💨',
+  'ИГРАТЬ В ПРИСТАВКУ 🕹️',
+  'ПО БАРАМ 🍹',
+  'ПОЙДЕМ В КИНО 🎥',
+  'СЮРПРИЗ ✨',
+  'ПРЕДЛОЖИ СВОЕ 😏'
+];
+function today(){return new Date().toISOString().slice(0,10)}
+function timeOptions(){let out='<option value="">Выбери время</option>';for(let h=0;h<24;h++){for(let m=0;m<60;m+=15){const v=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');out+=`<option value="${v}" ${state.time===v?'selected':''}>${v}</option>`}}return out}
+function esc(s){return String(s||'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function fmtDate(value){if(!value)return 'Дата не выбрана';const [y,m,d]=value.split('-');return `${d}.${m}.${y}`}
+function go(html){app.innerHTML=html;window.scrollTo({top:0,behavior:'smooth'})}
+function hasAccess(){const p=new URLSearchParams(location.search);return p.get('secret')===SECRET || p.has('invite')}
+function encodeData(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}
+function decodeData(str){try{str=str.replace(/-/g,'+').replace(/_/g,'/');while(str.length%4)str+='=';const bin=atob(str);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return JSON.parse(new TextDecoder().decode(bytes))}catch(e){return null}}
+function baseUrl(){let path=location.pathname.replace(/\/Love\.html$/i,'/').replace(/\/index\.html$/i,'/');return location.origin+path}
+function makeInviteLink(){const payload={target:state.target,date:state.date,time:state.time,activities:state.activities,custom:state.custom,created:Date.now()};return `${baseUrl()}?invite=${encodeData(payload)}&v=invite`}
+function renderLock(){go(`<div class="lock"><p class="kicker">Закрытая страница</p><h1 class="title">Эта ссылка только для своих ❤️</h1><p class="subtitle">Открой сайт по секретной ссылке, чтобы создать приглашение.</p></div>`)}
+function renderStart(){go(`<p class="kicker">Свидание начинается здесь</p><h1 class="title">ДЛЯ КОГО БУДЕМ ДЕЛАТЬ ПРИГЛАШЕНИЕ?</h1><p class="subtitle">Выбери, кому будет адресована финальная романтичная карточка.</p><div class="stack grid2"><button class="choice" onclick="chooseTarget('wife')">ДЛЯ ЖЕНЫ</button><button class="choice" onclick="chooseTarget('husband')">ДЛЯ МУЖА</button></div>`)}
+function chooseTarget(target){state.target=target;const who=target==='husband'?'МУЖ':'ЖЕНА';const emoji=target==='husband'?'🥹❤️':'💃❤️';go(`<p class="kicker">Отличный выбор</p><div class="emoji-big">${emoji}</div><h1 class="title">${who} УЖЕ РАДУЕТСЯ!</h1><p class="subtitle">Сейчас выберем дату, время и план идеального свидания.</p>`);setTimeout(renderDate,900)}
+function renderDate(){go(`<p class="kicker">Шаг 1 из 2</p><h1 class="title">И ТАК...<br>КОГДА ЖЕ ЭТО БУДЕТ?</h1><div class="form-block"><label><span class="label">Дата</span><input id="date" type="date" min="${today()}" value="${esc(state.date)}"></label><label><span class="label">Время</span><select id="time">${timeOptions()}</select></label></div><div class="footer-actions"><button class="primary" onclick="saveDate()">❤️ ВЫБРАТЬ ❤️</button></div><p class="help">Выбери дату и время, чтобы перейти к плану свидания.</p>`)}
+function saveDate(){state.date=document.getElementById('date').value;state.time=document.getElementById('time').value;if(!state.date||!state.time){alert('Выбери дату и время ❤️');return}renderPlan()}
+function renderPlan(){const buttons=activities.map(a=>`<button class="activity ${state.activities.includes(a)?'active':''}" onclick="toggleActivity('${esc(a)}')">${esc(a)}</button>`).join('');const customOn=state.activities.includes('ПРЕДЛОЖИ СВОЕ 😏');go(`<p class="kicker">Шаг 2 из 2</p><h1 class="title">ЧТО ЖЕ МЫ БУДЕМ ДЕЛАТЬ?</h1><div class="activity-grid">${buttons}</div><div id="customBox" class="${customOn?'':'hidden'}" style="margin-top:16px"><textarea id="custom" maxlength="150" placeholder="Напиши свое предложение...">${esc(state.custom)}</textarea><div class="counter"><span id="left">${150-state.custom.length}</span> символов осталось</div></div><div class="footer-actions"><button class="primary" onclick="renderConfirm()">ПРОДОЛЖИТЬ</button></div><p class="help">Можно выбрать несколько вариантов.</p>`);if(customOn){const t=document.getElementById('custom');const l=document.getElementById('left');t.addEventListener('input',()=>{state.custom=t.value;l.textContent=150-t.value.length})}}
+function toggleActivity(name){const i=state.activities.indexOf(name);if(i>=0)state.activities.splice(i,1);else state.activities.push(name);renderPlan()}
+function renderConfirm(){if(!state.activities.length){alert('Выбери хотя бы один вариант ❤️');return}const custom=document.getElementById('custom');if(custom)state.custom=custom.value.trim();const list=state.activities.filter(a=>a!=='ПРЕДЛОЖИ СВОЕ 😏').concat(state.custom?[`Свое предложение: ${state.custom}`]:[]).join(', ');go(`<p class="kicker">Подтверждение</p><h1 class="title">ВСЁ ВЕРНО?</h1><div class="summary"><div class="summary-row"><b>Для кого</b><span>${state.target==='husband'?'Для мужа':'Для жены'}</span></div><div class="summary-row"><b>Дата</b><span>${fmtDate(state.date)}</span></div><div class="summary-row"><b>Время</b><span>${esc(state.time)}</span></div><div class="summary-row"><b>План</b><span>${esc(list)}</span></div></div><div class="footer-actions"><button class="ghost" onclick="renderPlan()">ИЗМЕНИТЬ</button><button class="primary" onclick="renderShare()">СОЗДАТЬ ССЫЛКУ 💌</button></div>`)}
+function renderShare(){const link=makeInviteLink();go(`<p class="kicker">Готово</p><h1 class="title">ССЫЛКА НА СВИДАНИЕ ГОТОВА 💌</h1><p class="subtitle">Теперь отправь эту ссылку любимому человеку. По ней откроется карточка с подробностями.</p><div class="linkbox" id="inviteLink">${esc(link)}</div><div class="footer-actions"><button class="secondary" onclick="copyLink()">СКОПИРОВАТЬ ССЫЛКУ</button><button class="primary" onclick="shareLink()">ПОДЕЛИТЬСЯ</button></div><p class="help" id="copyStatus"></p>`)}
+async function copyLink(){const link=document.getElementById('inviteLink').textContent;try{await navigator.clipboard.writeText(link)}catch(e){const t=document.createElement('textarea');t.value=link;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove()}document.getElementById('copyStatus').textContent='Ссылка скопирована ❤️'}
+async function shareLink(){const link=document.getElementById('inviteLink').textContent;if(navigator.share){try{await navigator.share({title:'Приглашение на свидание ❤️',text:'У меня для тебя свидание ❤️',url:link});return}catch(e){}}await copyLink()}
+function renderInvite(data){const title=data.target==='husband'?'ЛЮБИМАЯ ЖЕНА ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️':'ЛЮБИМЫЙ МУЖ ПРИГЛАШАЕТ ВАС НА СВИДАНИЕ ❤️';const list=(data.activities||[]).filter(a=>a!=='ПРЕДЛОЖИ СВОЕ 😏').concat(data.custom?[`Свое предложение: ${data.custom}`]:[]).join(', ');go(`<p class="kicker">Персональное приглашение</p><h1 class="title">${title}</h1><p class="subtitle">Вот все подробности вашего свидания.</p><div class="summary"><div class="summary-row"><b>Дата</b><span>${fmtDate(data.date)}</span></div><div class="summary-row"><b>Время</b><span>${esc(data.time)}</span></div><div class="summary-row"><b>Что будем делать</b><span>${esc(list)}</span></div></div><div class="emoji-big">❤️</div>`)}
+(function init(){const p=new URLSearchParams(location.search);const invite=p.get('invite');if(invite){const data=decodeData(invite);if(data)return renderInvite(data);return renderLock()}if(!hasAccess())return renderLock();renderStart()})();
+</script>
+</body>
+</html>
